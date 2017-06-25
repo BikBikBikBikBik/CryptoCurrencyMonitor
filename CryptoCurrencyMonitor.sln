@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyMonitor.Common", "CryptoCurrencyMonitor.Common\CryptoCurrencyMonitor.Common.csproj", "{7392D3A1-8AE1-4270-A34A-8983E4803FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyMonitor.MarketData.Client", "CryptoCurrencyMonitor.MarketData.Client\CryptoCurrencyMonitor.MarketData.Client.csproj", "{C2E2748B-60C1-4AA8-BA97-358F3CAAAC67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyMonitor.MarketData.Monitor", "CryptoCurrencyMonitor.MarketData.Monitor\CryptoCurrencyMonitor.MarketData.Monitor.csproj", "{0C82E630-CF46-46E6-BCF1-1CA243C34114}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7392D3A1-8AE1-4270-A34A-8983E4803FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7392D3A1-8AE1-4270-A34A-8983E4803FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7392D3A1-8AE1-4270-A34A-8983E4803FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7392D3A1-8AE1-4270-A34A-8983E4803FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2E2748B-60C1-4AA8-BA97-358F3CAAAC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2E2748B-60C1-4AA8-BA97-358F3CAAAC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2E2748B-60C1-4AA8-BA97-358F3CAAAC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2E2748B-60C1-4AA8-BA97-358F3CAAAC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C82E630-CF46-46E6-BCF1-1CA243C34114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C82E630-CF46-46E6-BCF1-1CA243C34114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C82E630-CF46-46E6-BCF1-1CA243C34114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C82E630-CF46-46E6-BCF1-1CA243C34114}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
