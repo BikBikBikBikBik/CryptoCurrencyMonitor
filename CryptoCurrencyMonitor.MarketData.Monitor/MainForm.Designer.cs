@@ -30,17 +30,17 @@
 			this._lblLastUpdated = new System.Windows.Forms.Label();
 			this._lblLastUpdatedValue = new System.Windows.Forms.Label();
 			this._prgrssGlobalRefresh = new System.Windows.Forms.ProgressBar();
-			this._gridExchangeData = new System.Windows.Forms.DataGridView();
-			this._clmnExchangeCoin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeCurrentUsdPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeCurrentBtcPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeSatoshi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangePercentChange1h = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangePercentChange24h = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangePercentChange7D = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeVolumeUsd24h = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeMarketCapUsd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnExchangeRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._gridMarketData = new System.Windows.Forms.DataGridView();
+			this._clmnMarketCoin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketCurrentUsdPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketCurrentBtcPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketSatoshi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketPercentChange1h = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketPercentChange24h = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketPercentChange7D = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketVolumeUsd24h = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketMarketCapUsd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnMarketRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this._btnPauseRefreshTimer = new System.Windows.Forms.Button();
 			this._ntfyMain = new System.Windows.Forms.NotifyIcon(this.components);
 			this._gridHoldingsData = new System.Windows.Forms.DataGridView();
@@ -53,7 +53,7 @@
 			this._lblTotalValBtc = new System.Windows.Forms.Label();
 			this._lblTotalValBtcValue = new System.Windows.Forms.Label();
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
-			((System.ComponentModel.ISupportInitialize)(this._gridExchangeData)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
 			this._cntnrGridData.Panel1.SuspendLayout();
@@ -90,101 +90,101 @@
 			this._prgrssGlobalRefresh.Size = new System.Drawing.Size(928, 23);
 			this._prgrssGlobalRefresh.TabIndex = 4;
 			// 
-			// _gridExchangeData
+			// _gridMarketData
 			// 
-			this._gridExchangeData.AllowUserToAddRows = false;
-			this._gridExchangeData.AllowUserToDeleteRows = false;
-			this._gridExchangeData.AllowUserToResizeRows = false;
+			this._gridMarketData.AllowUserToAddRows = false;
+			this._gridMarketData.AllowUserToDeleteRows = false;
+			this._gridMarketData.AllowUserToResizeRows = false;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this._gridExchangeData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this._gridExchangeData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this._gridMarketData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			this._gridMarketData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this._gridExchangeData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this._gridExchangeData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this._gridExchangeData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-			this._gridExchangeData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this._clmnExchangeCoin,
-            this._clmnExchangeCurrentUsdPrice,
-            this._clmnExchangeCurrentBtcPrice,
-            this._clmnExchangeSatoshi,
-            this._clmnExchangePercentChange1h,
-            this._clmnExchangePercentChange24h,
-            this._clmnExchangePercentChange7D,
-            this._clmnExchangeVolumeUsd24h,
-            this._clmnExchangeMarketCapUsd,
-            this._clmnExchangeRank});
-			this._gridExchangeData.Location = new System.Drawing.Point(1, 3);
-			this._gridExchangeData.Name = "_gridExchangeData";
-			this._gridExchangeData.ReadOnly = true;
-			this._gridExchangeData.RowHeadersVisible = false;
-			this._gridExchangeData.RowHeadersWidth = 60;
-			this._gridExchangeData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this._gridExchangeData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridExchangeData.Size = new System.Drawing.Size(1005, 340);
-			this._gridExchangeData.TabIndex = 5;
-			this._gridExchangeData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridExchangeDataCellFormatting);
-			this._gridExchangeData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridExchangeDataSortCompare);
+			this._gridMarketData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+			this._gridMarketData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this._gridMarketData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this._gridMarketData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this._clmnMarketCoin,
+            this._clmnMarketCurrentUsdPrice,
+            this._clmnMarketCurrentBtcPrice,
+            this._clmnMarketSatoshi,
+            this._clmnMarketPercentChange1h,
+            this._clmnMarketPercentChange24h,
+            this._clmnMarketPercentChange7D,
+            this._clmnMarketVolumeUsd24h,
+            this._clmnMarketMarketCapUsd,
+            this._clmnMarketRank});
+			this._gridMarketData.Location = new System.Drawing.Point(1, 3);
+			this._gridMarketData.Name = "_gridMarketData";
+			this._gridMarketData.ReadOnly = true;
+			this._gridMarketData.RowHeadersVisible = false;
+			this._gridMarketData.RowHeadersWidth = 60;
+			this._gridMarketData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this._gridMarketData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this._gridMarketData.Size = new System.Drawing.Size(1005, 340);
+			this._gridMarketData.TabIndex = 5;
+			this._gridMarketData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridMarketDataCellFormatting);
+			this._gridMarketData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridMarketDataSortCompare);
 			// 
-			// _clmnExchangeCoin
+			// _clmnMarketCoin
 			// 
-			this._clmnExchangeCoin.HeaderText = "Coin";
-			this._clmnExchangeCoin.Name = "_clmnExchangeCoin";
-			this._clmnExchangeCoin.ReadOnly = true;
+			this._clmnMarketCoin.HeaderText = "Coin";
+			this._clmnMarketCoin.Name = "_clmnMarketCoin";
+			this._clmnMarketCoin.ReadOnly = true;
 			// 
-			// _clmnExchangeCurrentUsdPrice
+			// _clmnMarketCurrentUsdPrice
 			// 
-			this._clmnExchangeCurrentUsdPrice.HeaderText = "USD (CMC / CC)";
-			this._clmnExchangeCurrentUsdPrice.Name = "_clmnExchangeCurrentUsdPrice";
-			this._clmnExchangeCurrentUsdPrice.ReadOnly = true;
+			this._clmnMarketCurrentUsdPrice.HeaderText = "USD (CMC / CC)";
+			this._clmnMarketCurrentUsdPrice.Name = "_clmnMarketCurrentUsdPrice";
+			this._clmnMarketCurrentUsdPrice.ReadOnly = true;
 			// 
-			// _clmnExchangeCurrentBtcPrice
+			// _clmnMarketCurrentBtcPrice
 			// 
-			this._clmnExchangeCurrentBtcPrice.HeaderText = "BTC";
-			this._clmnExchangeCurrentBtcPrice.Name = "_clmnExchangeCurrentBtcPrice";
-			this._clmnExchangeCurrentBtcPrice.ReadOnly = true;
+			this._clmnMarketCurrentBtcPrice.HeaderText = "BTC";
+			this._clmnMarketCurrentBtcPrice.Name = "_clmnMarketCurrentBtcPrice";
+			this._clmnMarketCurrentBtcPrice.ReadOnly = true;
 			// 
-			// _clmnExchangeSatoshi
+			// _clmnMarketSatoshi
 			// 
-			this._clmnExchangeSatoshi.HeaderText = "Satoshi";
-			this._clmnExchangeSatoshi.Name = "_clmnExchangeSatoshi";
-			this._clmnExchangeSatoshi.ReadOnly = true;
+			this._clmnMarketSatoshi.HeaderText = "Satoshi";
+			this._clmnMarketSatoshi.Name = "_clmnMarketSatoshi";
+			this._clmnMarketSatoshi.ReadOnly = true;
 			// 
-			// _clmnExchangePercentChange1h
+			// _clmnMarketPercentChange1h
 			// 
-			this._clmnExchangePercentChange1h.HeaderText = "% 1H";
-			this._clmnExchangePercentChange1h.Name = "_clmnExchangePercentChange1h";
-			this._clmnExchangePercentChange1h.ReadOnly = true;
+			this._clmnMarketPercentChange1h.HeaderText = "% 1H";
+			this._clmnMarketPercentChange1h.Name = "_clmnMarketPercentChange1h";
+			this._clmnMarketPercentChange1h.ReadOnly = true;
 			// 
-			// _clmnExchangePercentChange24h
+			// _clmnMarketPercentChange24h
 			// 
-			this._clmnExchangePercentChange24h.HeaderText = "% 24H";
-			this._clmnExchangePercentChange24h.Name = "_clmnExchangePercentChange24h";
-			this._clmnExchangePercentChange24h.ReadOnly = true;
+			this._clmnMarketPercentChange24h.HeaderText = "% 24H";
+			this._clmnMarketPercentChange24h.Name = "_clmnMarketPercentChange24h";
+			this._clmnMarketPercentChange24h.ReadOnly = true;
 			// 
-			// _clmnExchangePercentChange7D
+			// _clmnMarketPercentChange7D
 			// 
-			this._clmnExchangePercentChange7D.HeaderText = "% 7D";
-			this._clmnExchangePercentChange7D.Name = "_clmnExchangePercentChange7D";
-			this._clmnExchangePercentChange7D.ReadOnly = true;
+			this._clmnMarketPercentChange7D.HeaderText = "% 7D";
+			this._clmnMarketPercentChange7D.Name = "_clmnMarketPercentChange7D";
+			this._clmnMarketPercentChange7D.ReadOnly = true;
 			// 
-			// _clmnExchangeVolumeUsd24h
+			// _clmnMarketVolumeUsd24h
 			// 
-			this._clmnExchangeVolumeUsd24h.HeaderText = "Vol (USD) 24H";
-			this._clmnExchangeVolumeUsd24h.Name = "_clmnExchangeVolumeUsd24h";
-			this._clmnExchangeVolumeUsd24h.ReadOnly = true;
+			this._clmnMarketVolumeUsd24h.HeaderText = "Vol (USD) 24H";
+			this._clmnMarketVolumeUsd24h.Name = "_clmnMarketVolumeUsd24h";
+			this._clmnMarketVolumeUsd24h.ReadOnly = true;
 			// 
-			// _clmnExchangeMarketCapUsd
+			// _clmnMarketMarketCapUsd
 			// 
-			this._clmnExchangeMarketCapUsd.HeaderText = "Cap (USD)";
-			this._clmnExchangeMarketCapUsd.Name = "_clmnExchangeMarketCapUsd";
-			this._clmnExchangeMarketCapUsd.ReadOnly = true;
+			this._clmnMarketMarketCapUsd.HeaderText = "Cap (USD)";
+			this._clmnMarketMarketCapUsd.Name = "_clmnMarketMarketCapUsd";
+			this._clmnMarketMarketCapUsd.ReadOnly = true;
 			// 
-			// _clmnExchangeRank
+			// _clmnMarketRank
 			// 
-			this._clmnExchangeRank.HeaderText = "Rank";
-			this._clmnExchangeRank.Name = "_clmnExchangeRank";
-			this._clmnExchangeRank.ReadOnly = true;
+			this._clmnMarketRank.HeaderText = "Rank";
+			this._clmnMarketRank.Name = "_clmnMarketRank";
+			this._clmnMarketRank.ReadOnly = true;
 			// 
 			// _btnPauseRefreshTimer
 			// 
@@ -306,7 +306,7 @@
 			// 
 			// _cntnrGridData.Panel1
 			// 
-			this._cntnrGridData.Panel1.Controls.Add(this._gridExchangeData);
+			this._cntnrGridData.Panel1.Controls.Add(this._gridMarketData);
 			this._cntnrGridData.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			// 
 			// _cntnrGridData.Panel2
@@ -338,9 +338,10 @@
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Currency Exchange Monitor";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormMainClosed);
 			this.Load += new System.EventHandler(this.OnFormMainLoad);
 			this.Resize += new System.EventHandler(this.OnFormMainResize);
-			((System.ComponentModel.ISupportInitialize)(this._gridExchangeData)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).EndInit();
 			this._cntnrGridData.Panel1.ResumeLayout(false);
 			this._cntnrGridData.Panel2.ResumeLayout(false);
@@ -355,20 +356,20 @@
 		private System.Windows.Forms.Label _lblLastUpdated;
 		private System.Windows.Forms.Label _lblLastUpdatedValue;
 		private System.Windows.Forms.ProgressBar _prgrssGlobalRefresh;
-		private System.Windows.Forms.DataGridView _gridExchangeData;
+		private System.Windows.Forms.DataGridView _gridMarketData;
 		private System.Windows.Forms.Button _btnPauseRefreshTimer;
 		private System.Windows.Forms.NotifyIcon _ntfyMain;
 		private System.Windows.Forms.DataGridView _gridHoldingsData;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCoin;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCurrentUsdPrice;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCurrentBtcPrice;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeSatoshi;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangePercentChange1h;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangePercentChange24h;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangePercentChange7D;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeVolumeUsd24h;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeMarketCapUsd;
-		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeRank;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCoin;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCurrentUsdPrice;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCurrentBtcPrice;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketSatoshi;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketPercentChange1h;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketPercentChange24h;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketPercentChange7D;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketVolumeUsd24h;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketMarketCapUsd;
+		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketRank;
 		private System.Windows.Forms.Label _lblTotalValUsd;
 		private System.Windows.Forms.Label _lblTotalValUsdValue;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsCoin;

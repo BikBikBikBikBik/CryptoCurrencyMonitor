@@ -1,5 +1,5 @@
 ﻿namespace CryptoCurrencyMonitor.MarketData.Monitor {
-	internal enum ExchangeDataColumnType {
+	internal enum MarketDataColumnType {
 		Coin,
 
 		MarketCapInUsd,
