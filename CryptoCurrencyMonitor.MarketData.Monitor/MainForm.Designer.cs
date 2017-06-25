@@ -48,20 +48,24 @@
 			this._clmnHoldingsQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this._clmnHoldingsPriceInUsd = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this._clmnHoldingsPriceInBtc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._txtbxErrors = new System.Windows.Forms.TextBox();
 			this._lblTotalValUsd = new System.Windows.Forms.Label();
 			this._lblTotalValUsdValue = new System.Windows.Forms.Label();
 			this._lblTotalValBtc = new System.Windows.Forms.Label();
 			this._lblTotalValBtcValue = new System.Windows.Forms.Label();
+			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
 			((System.ComponentModel.ISupportInitialize)(this._gridExchangeData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
+			this._cntnrGridData.Panel1.SuspendLayout();
+			this._cntnrGridData.Panel2.SuspendLayout();
+			this._cntnrGridData.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// _lblLastUpdated
 			// 
 			this._lblLastUpdated.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblLastUpdated.AutoSize = true;
-			this._lblLastUpdated.Location = new System.Drawing.Point(835, 561);
+			this._lblLastUpdated.Location = new System.Drawing.Point(835, 532);
 			this._lblLastUpdated.Name = "_lblLastUpdated";
 			this._lblLastUpdated.Size = new System.Drawing.Size(74, 13);
 			this._lblLastUpdated.TabIndex = 2;
@@ -71,7 +75,7 @@
 			// 
 			this._lblLastUpdatedValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblLastUpdatedValue.AutoSize = true;
-			this._lblLastUpdatedValue.Location = new System.Drawing.Point(915, 561);
+			this._lblLastUpdatedValue.Location = new System.Drawing.Point(915, 532);
 			this._lblLastUpdatedValue.Name = "_lblLastUpdatedValue";
 			this._lblLastUpdatedValue.Size = new System.Drawing.Size(106, 13);
 			this._lblLastUpdatedValue.TabIndex = 3;
@@ -79,10 +83,11 @@
 			// 
 			// _prgrssGlobalRefresh
 			// 
-			this._prgrssGlobalRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this._prgrssGlobalRefresh.Location = new System.Drawing.Point(511, 284);
+			this._prgrssGlobalRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this._prgrssGlobalRefresh.Location = new System.Drawing.Point(12, 557);
 			this._prgrssGlobalRefresh.Name = "_prgrssGlobalRefresh";
-			this._prgrssGlobalRefresh.Size = new System.Drawing.Size(428, 23);
+			this._prgrssGlobalRefresh.Size = new System.Drawing.Size(928, 23);
 			this._prgrssGlobalRefresh.TabIndex = 4;
 			// 
 			// _gridExchangeData
@@ -109,14 +114,14 @@
             this._clmnExchangeVolumeUsd24h,
             this._clmnExchangeMarketCapUsd,
             this._clmnExchangeRank});
-			this._gridExchangeData.Location = new System.Drawing.Point(12, 5);
+			this._gridExchangeData.Location = new System.Drawing.Point(1, 3);
 			this._gridExchangeData.Name = "_gridExchangeData";
 			this._gridExchangeData.ReadOnly = true;
 			this._gridExchangeData.RowHeadersVisible = false;
 			this._gridExchangeData.RowHeadersWidth = 60;
 			this._gridExchangeData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this._gridExchangeData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridExchangeData.Size = new System.Drawing.Size(1008, 273);
+			this._gridExchangeData.Size = new System.Drawing.Size(1005, 340);
 			this._gridExchangeData.TabIndex = 5;
 			this._gridExchangeData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridExchangeDataCellFormatting);
 			this._gridExchangeData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridExchangeDataSortCompare);
@@ -184,7 +189,7 @@
 			// _btnPauseRefreshTimer
 			// 
 			this._btnPauseRefreshTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this._btnPauseRefreshTimer.Location = new System.Drawing.Point(945, 284);
+			this._btnPauseRefreshTimer.Location = new System.Drawing.Point(946, 557);
 			this._btnPauseRefreshTimer.Name = "_btnPauseRefreshTimer";
 			this._btnPauseRefreshTimer.Size = new System.Drawing.Size(75, 23);
 			this._btnPauseRefreshTimer.TabIndex = 6;
@@ -206,7 +211,8 @@
 			this._gridHoldingsData.AllowUserToResizeRows = false;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
 			this._gridHoldingsData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-			this._gridHoldingsData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this._gridHoldingsData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this._gridHoldingsData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this._gridHoldingsData.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -216,13 +222,13 @@
             this._clmnHoldingsQuantity,
             this._clmnHoldingsPriceInUsd,
             this._clmnHoldingsPriceInBtc});
-			this._gridHoldingsData.Location = new System.Drawing.Point(12, 284);
+			this._gridHoldingsData.Location = new System.Drawing.Point(0, 3);
 			this._gridHoldingsData.Name = "_gridHoldingsData";
 			this._gridHoldingsData.RowHeadersVisible = false;
 			this._gridHoldingsData.RowHeadersWidth = 60;
 			this._gridHoldingsData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this._gridHoldingsData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridHoldingsData.Size = new System.Drawing.Size(493, 273);
+			this._gridHoldingsData.Size = new System.Drawing.Size(1006, 249);
 			this._gridHoldingsData.TabIndex = 7;
 			this._gridHoldingsData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.OnGridHoldingsDataCellValidating);
 			this._gridHoldingsData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridHoldingsDataSortCompare);
@@ -249,22 +255,11 @@
 			this._clmnHoldingsPriceInBtc.HeaderText = "BTC Val";
 			this._clmnHoldingsPriceInBtc.Name = "_clmnHoldingsPriceInBtc";
 			// 
-			// _txtbxErrors
-			// 
-			this._txtbxErrors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this._txtbxErrors.Location = new System.Drawing.Point(511, 313);
-			this._txtbxErrors.Multiline = true;
-			this._txtbxErrors.Name = "_txtbxErrors";
-			this._txtbxErrors.ReadOnly = true;
-			this._txtbxErrors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this._txtbxErrors.Size = new System.Drawing.Size(508, 244);
-			this._txtbxErrors.TabIndex = 8;
-			// 
 			// _lblTotalValUsd
 			// 
 			this._lblTotalValUsd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValUsd.AutoSize = true;
-			this._lblTotalValUsd.Location = new System.Drawing.Point(12, 561);
+			this._lblTotalValUsd.Location = new System.Drawing.Point(12, 532);
 			this._lblTotalValUsd.Name = "_lblTotalValUsd";
 			this._lblTotalValUsd.Size = new System.Drawing.Size(118, 13);
 			this._lblTotalValUsd.TabIndex = 9;
@@ -274,7 +269,7 @@
 			// 
 			this._lblTotalValUsdValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValUsdValue.AutoSize = true;
-			this._lblTotalValUsdValue.Location = new System.Drawing.Point(136, 561);
+			this._lblTotalValUsdValue.Location = new System.Drawing.Point(136, 532);
 			this._lblTotalValUsdValue.Name = "_lblTotalValUsdValue";
 			this._lblTotalValUsdValue.Size = new System.Drawing.Size(112, 13);
 			this._lblTotalValUsdValue.TabIndex = 10;
@@ -284,7 +279,7 @@
 			// 
 			this._lblTotalValBtc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValBtc.AutoSize = true;
-			this._lblTotalValBtc.Location = new System.Drawing.Point(334, 561);
+			this._lblTotalValBtc.Location = new System.Drawing.Point(334, 532);
 			this._lblTotalValBtc.Name = "_lblTotalValBtc";
 			this._lblTotalValBtc.Size = new System.Drawing.Size(76, 13);
 			this._lblTotalValBtc.TabIndex = 11;
@@ -294,28 +289,49 @@
 			// 
 			this._lblTotalValBtcValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValBtcValue.AutoSize = true;
-			this._lblTotalValBtcValue.Location = new System.Drawing.Point(416, 561);
+			this._lblTotalValBtcValue.Location = new System.Drawing.Point(416, 532);
 			this._lblTotalValBtcValue.Name = "_lblTotalValBtcValue";
 			this._lblTotalValBtcValue.Size = new System.Drawing.Size(110, 13);
 			this._lblTotalValBtcValue.TabIndex = 12;
 			this._lblTotalValBtcValue.Text = "TOTAL_VALUE_BTC";
+			// 
+			// _cntnrGridData
+			// 
+			this._cntnrGridData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this._cntnrGridData.Location = new System.Drawing.Point(12, 12);
+			this._cntnrGridData.Name = "_cntnrGridData";
+			this._cntnrGridData.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// _cntnrGridData.Panel1
+			// 
+			this._cntnrGridData.Panel1.Controls.Add(this._gridExchangeData);
+			this._cntnrGridData.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			// 
+			// _cntnrGridData.Panel2
+			// 
+			this._cntnrGridData.Panel2.Controls.Add(this._gridHoldingsData);
+			this._cntnrGridData.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this._cntnrGridData.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this._cntnrGridData.Size = new System.Drawing.Size(1006, 517);
+			this._cntnrGridData.SplitterDistance = 258;
+			this._cntnrGridData.TabIndex = 13;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1032, 583);
+			this.Controls.Add(this._lblLastUpdated);
 			this.Controls.Add(this._lblTotalValBtcValue);
 			this.Controls.Add(this._lblTotalValBtc);
 			this.Controls.Add(this._lblTotalValUsdValue);
 			this.Controls.Add(this._lblTotalValUsd);
-			this.Controls.Add(this._txtbxErrors);
-			this.Controls.Add(this._gridHoldingsData);
-			this.Controls.Add(this._btnPauseRefreshTimer);
-			this.Controls.Add(this._gridExchangeData);
-			this.Controls.Add(this._prgrssGlobalRefresh);
 			this.Controls.Add(this._lblLastUpdatedValue);
-			this.Controls.Add(this._lblLastUpdated);
+			this.Controls.Add(this._cntnrGridData);
+			this.Controls.Add(this._btnPauseRefreshTimer);
+			this.Controls.Add(this._prgrssGlobalRefresh);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(1040, 610);
@@ -326,6 +342,10 @@
 			this.Resize += new System.EventHandler(this.OnFormMainResize);
 			((System.ComponentModel.ISupportInitialize)(this._gridExchangeData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).EndInit();
+			this._cntnrGridData.Panel1.ResumeLayout(false);
+			this._cntnrGridData.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).EndInit();
+			this._cntnrGridData.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -339,7 +359,6 @@
 		private System.Windows.Forms.Button _btnPauseRefreshTimer;
 		private System.Windows.Forms.NotifyIcon _ntfyMain;
 		private System.Windows.Forms.DataGridView _gridHoldingsData;
-		private System.Windows.Forms.TextBox _txtbxErrors;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCoin;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCurrentUsdPrice;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnExchangeCurrentBtcPrice;
@@ -358,6 +377,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInBtc;
 		private System.Windows.Forms.Label _lblTotalValBtc;
 		private System.Windows.Forms.Label _lblTotalValBtcValue;
+		private System.Windows.Forms.SplitContainer _cntnrGridData;
 	}
 }
 

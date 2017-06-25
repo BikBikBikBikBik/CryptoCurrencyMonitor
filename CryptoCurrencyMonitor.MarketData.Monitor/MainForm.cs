@@ -25,7 +25,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValBtcValue.Text = "0.00000000";
 			_lblTotalValUsdValue.Text = "0.00";
 			_ntfyMain.Text = String.Empty;
-			_txtbxErrors.Text = String.Empty;
+			//_txtbxErrors.Text = String.Empty;
 			
 			SetExchangeDataColumnTags();
 			SetHoldingsDataColumnType();
@@ -251,12 +251,12 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				while (curException != null) {
 					var indent = new String(' ', indentLevel);
 					var dateIndent = new String('-', indentLevel);
-					_txtbxErrors.AppendText($"{dateIndent}{DateTime.Now:F}{Environment.NewLine}{indent}{curException.GetType().FullName}{Environment.NewLine}{indent}{curException.Message}{Environment.NewLine}{indent}{curException.StackTrace}{Environment.NewLine}");
+					//_txtbxErrors.AppendText($"{dateIndent}{DateTime.Now:F}{Environment.NewLine}{indent}{curException.GetType().FullName}{Environment.NewLine}{indent}{curException.Message}{Environment.NewLine}{indent}{curException.StackTrace}{Environment.NewLine}");
 
 					curException = curException.InnerException;
 					indentLevel += 2;
 				}
-				_txtbxErrors.AppendText($"------------------------------------------------------------------------------------------{Environment.NewLine}");
+				//_txtbxErrors.AppendText($"------------------------------------------------------------------------------------------{Environment.NewLine}");
 			}
 			_lblLastUpdatedValue.Text = DateTime.Now.ToLongTimeString();
 			_ntfyMain.Text = $"{_lblLastUpdated.Text} {_lblLastUpdatedValue.Text}";
