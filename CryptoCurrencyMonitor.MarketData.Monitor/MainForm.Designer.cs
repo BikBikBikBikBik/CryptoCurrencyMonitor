@@ -44,15 +44,15 @@
 			this._btnPauseRefreshTimer = new System.Windows.Forms.Button();
 			this._ntfyMain = new System.Windows.Forms.NotifyIcon(this.components);
 			this._gridHoldingsData = new System.Windows.Forms.DataGridView();
+			this._clmnHoldingsCoin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnHoldingsQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnHoldingsPriceInUsd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this._clmnHoldingsPriceInBtc = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this._lblTotalValUsd = new System.Windows.Forms.Label();
 			this._lblTotalValUsdValue = new System.Windows.Forms.Label();
 			this._lblTotalValBtc = new System.Windows.Forms.Label();
 			this._lblTotalValBtcValue = new System.Windows.Forms.Label();
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
-			this._clmnHoldingsCoin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnHoldingsQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnHoldingsPriceInUsd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this._clmnHoldingsPriceInBtc = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
@@ -233,6 +233,29 @@
 			this._gridHoldingsData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.OnGridHoldingsDataCellValidating);
 			this._gridHoldingsData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridHoldingsDataSortCompare);
 			// 
+			// _clmnHoldingsCoin
+			// 
+			this._clmnHoldingsCoin.HeaderText = "Coin";
+			this._clmnHoldingsCoin.Name = "_clmnHoldingsCoin";
+			this._clmnHoldingsCoin.ReadOnly = true;
+			// 
+			// _clmnHoldingsQuantity
+			// 
+			this._clmnHoldingsQuantity.HeaderText = "Quantity";
+			this._clmnHoldingsQuantity.Name = "_clmnHoldingsQuantity";
+			// 
+			// _clmnHoldingsPriceInUsd
+			// 
+			this._clmnHoldingsPriceInUsd.HeaderText = "$ Val (CMC / CC)";
+			this._clmnHoldingsPriceInUsd.Name = "_clmnHoldingsPriceInUsd";
+			this._clmnHoldingsPriceInUsd.ReadOnly = true;
+			// 
+			// _clmnHoldingsPriceInBtc
+			// 
+			this._clmnHoldingsPriceInBtc.HeaderText = "BTC Val";
+			this._clmnHoldingsPriceInBtc.Name = "_clmnHoldingsPriceInBtc";
+			this._clmnHoldingsPriceInBtc.ReadOnly = true;
+			// 
 			// _lblTotalValUsd
 			// 
 			this._lblTotalValUsd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -296,29 +319,6 @@
 			this._cntnrGridData.SplitterDistance = 258;
 			this._cntnrGridData.TabIndex = 13;
 			// 
-			// _clmnHoldingsCoin
-			// 
-			this._clmnHoldingsCoin.HeaderText = "Coin";
-			this._clmnHoldingsCoin.Name = "_clmnHoldingsCoin";
-			this._clmnHoldingsCoin.ReadOnly = true;
-			// 
-			// _clmnHoldingsQuantity
-			// 
-			this._clmnHoldingsQuantity.HeaderText = "Quantity";
-			this._clmnHoldingsQuantity.Name = "_clmnHoldingsQuantity";
-			// 
-			// _clmnHoldingsPriceInUsd
-			// 
-			this._clmnHoldingsPriceInUsd.HeaderText = "$ Val (CMC / CC)";
-			this._clmnHoldingsPriceInUsd.Name = "_clmnHoldingsPriceInUsd";
-			this._clmnHoldingsPriceInUsd.ReadOnly = true;
-			// 
-			// _clmnHoldingsPriceInBtc
-			// 
-			this._clmnHoldingsPriceInBtc.HeaderText = "BTC Val";
-			this._clmnHoldingsPriceInBtc.Name = "_clmnHoldingsPriceInBtc";
-			this._clmnHoldingsPriceInBtc.ReadOnly = true;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,7 +334,6 @@
 			this.Controls.Add(this._btnPauseRefreshTimer);
 			this.Controls.Add(this._prgrssGlobalRefresh);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MaximizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(1040, 610);
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
