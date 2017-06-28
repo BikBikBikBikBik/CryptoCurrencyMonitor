@@ -21,6 +21,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_cryptoCompareClient = new Client.CryptoCompare.ApiClient(ConfigurationManager.AppSettings["CRYPTOCOMPARE_API_BASE_ADDRESS"]);
 			_desiredHoldingsCurrencyTypes = ConfigurationManager.AppSettings["HOLDINGS_CURRENCY_LIST"].Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(c => c.ToCurrencyType()).ToList();
 			_desiredMarketCurrencyTypes = ConfigurationManager.AppSettings["CURRENCY_LIST"].Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(c => c.ToCurrencyType()).ToList();
+			_settingsManager = new SettingsManager(ConfigurationManager.AppSettings["SETTINGS_FILE_LOCATION"]);
 
 			_lblLastUpdatedValue.Text = String.Empty;
 			_lblTotalValBtcValue.Text = "0.00000000";
@@ -31,6 +32,42 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			SetHoldingsDataColumnType();
 			InitializeGlobalRefreshTimer();
 			InitializeHoldingsData();
+		}
+
+		private void ApplyMainFormSettings() {
+			var settings = _settingsManager.LoadCompleteSettings()?.MainForm;
+			if (settings == null) {
+				return;
+			}
+			
+			Size = new Size(settings.Width, settings.Height);
+			Location = new Point(settings.LocationX, settings.LocationY);
+			_cntnrGridData.SplitterDistance = settings.GridContainerSplitterPosition;
+
+			foreach (var column in settings.GridHoldingsColumns) {
+				var correspondingColumn = _holdingsDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
+				if (correspondingColumn != null) {
+					correspondingColumn.FillWeight = column.FillWeight;
+					correspondingColumn.Width = column.Width;
+				}
+			}
+
+			foreach (var row in settings.GridHoldingsQuantities) {
+				var correspondingRow = _holdingsDataGridViewRows.SingleOrDefault(r => row.Tag.Equals(r.Tag));
+				if (correspondingRow != null) {
+					correspondingRow.Cells[_clmnHoldingsQuantity.Index].Value = row.Value;
+				}
+			}
+
+			foreach (var column in settings.GridMarketColumns) {
+				var correspondingColumn = _marketDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
+				if (correspondingColumn != null) {
+					correspondingColumn.FillWeight = column.FillWeight;
+					correspondingColumn.Width = column.Width;
+				}
+			}
+
+			WindowState = settings.WindowState;
 		}
 
 		private String FormatPercentChange(decimal percentChange) {
@@ -50,6 +87,13 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 
 			return 0;
+		}
+
+		private void InitializeDataGridViewFields() {
+			_holdingsDataGridViewColumns = _holdingsDataGridViewColumns ?? _gridHoldingsData.Columns.Cast<DataGridViewColumn>().ToList();
+			_holdingsDataGridViewRows = _holdingsDataGridViewRows ?? _gridHoldingsData.Rows.Cast<DataGridViewRow>().ToList();
+			_marketDataGridViewColumns = _marketDataGridViewColumns ?? _gridMarketData.Columns.Cast<DataGridViewColumn>().ToList();
+			_marketDataGridViewRows = _marketDataGridViewRows != null ? (_marketDataGridViewRows.Count > 0 ? _marketDataGridViewRows : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList()) : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList();
 		}
 
 		private void InitializeGlobalRefreshTimer() {
@@ -73,17 +117,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
-		private void InitializeHoldingsGridData() {
-			_holdingsDataGridViewColumns = _holdingsDataGridViewColumns ?? _gridHoldingsData.Columns.Cast<DataGridViewColumn>().ToList();
-			_marketDataGridViewColumns = _marketDataGridViewColumns ?? _gridMarketData.Columns.Cast<DataGridViewColumn>().ToList();
-			_marketDataGridViewRows = _marketDataGridViewRows != null ? (_marketDataGridViewRows.Count > 0 ? _marketDataGridViewRows : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList()) : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList();
-			_holdingsPriceInBtcColumn = _holdingsPriceInBtcColumn ?? _holdingsDataGridViewColumns.Single(c => HoldingsDataColumnType.PriceInBtc.Equals(c.Tag));
-			_holdingsPriceInUsdColumn = _holdingsPriceInUsdColumn ?? _holdingsDataGridViewColumns.Single(c => HoldingsDataColumnType.PriceInUsd.Equals(c.Tag));
-			_holdingsQuantityColumn = _holdingsQuantityColumn ?? _holdingsDataGridViewColumns.Single(c => HoldingsDataColumnType.Quantity.Equals(c.Tag));
-			_marketPriceInBtcColumn = _marketPriceInBtcColumn ?? _marketDataGridViewColumns.Single(c => MarketDataColumnType.PriceInBtc.Equals(c.Tag));
-			_marketPriceInUsdColumn = _marketPriceInUsdColumn ?? _marketDataGridViewColumns.Single(c => MarketDataColumnType.PriceInUsd.Equals(c.Tag));
-		}
-
 		#region Event Handlers
 		private void OnBtnPauseRefreshTimerClick(object sender, EventArgs e) {
 			if (_globalRefreshTimer.Enabled) {
@@ -96,9 +129,12 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void OnFormMainClosed(object sender, FormClosedEventArgs e) {
+			SaveMainFormSettings();
 		}
 
 		private async void OnFormMainLoad(object sender, EventArgs e) {
+			InitializeDataGridViewFields();
+			ApplyMainFormSettings();
 			await RefreshAllData();
 		}
 
@@ -253,20 +289,20 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void RefreshHoldingsData() {
-			InitializeHoldingsGridData();
+			InitializeDataGridViewFields();
 			decimal overallPriceInBtc = 0, overallPriceInUsd1 = 0, overallPriceInUsd2 = 0;
 			
 			foreach (var row in _gridHoldingsData.Rows.Cast<DataGridViewRow>()) {
 				var correspondingMarketRow = _marketDataGridViewRows.SingleOrDefault(r => r.Tag.Equals(row.Tag));
 				if (correspondingMarketRow != null) {
-					var priceInBtc = decimal.Parse(correspondingMarketRow.Cells[_marketPriceInBtcColumn.Index].Value.ToString());
-					var priceInUsd = ParsePriceInUsdCell(correspondingMarketRow.Cells[_marketPriceInUsdColumn.Index].Value);
+					var priceInBtc = decimal.Parse(correspondingMarketRow.Cells[_clmnMarketCurrentBtcPrice.Index].Value.ToString());
+					var priceInUsd = ParsePriceInUsdCell(correspondingMarketRow.Cells[_clmnMarketCurrentUsdPrice.Index].Value);
 					var price1 = priceInUsd.Item1 ?? 0;
 					var price2 = priceInUsd.Item2 ?? 0;
 
 					//Use EditedFormattedValue here because if this was called from the DataCellValidating event then the Value
 					// field will not yet have the new value.
-					var quantity = decimal.Parse(row.Cells[_holdingsQuantityColumn.Index].EditedFormattedValue.ToString());
+					var quantity = decimal.Parse(row.Cells[_clmnHoldingsQuantity.Index].EditedFormattedValue.ToString());
 					var totalPriceInBtc = quantity * priceInBtc;
 					var totalPriceInUsd1 = quantity * price1;
 					var totalPriceInUsd2 = quantity * price2;
@@ -275,8 +311,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					overallPriceInUsd1 += totalPriceInUsd1;
 					overallPriceInUsd2 += totalPriceInUsd2;
 
-					row.Cells[_holdingsPriceInUsdColumn.Index].Value = $"{totalPriceInUsd1:N} / {totalPriceInUsd2:N}";
-					row.Cells[_holdingsPriceInBtcColumn.Index].Value = $"{totalPriceInBtc:N8}";
+					row.Cells[_clmnHoldingsPriceInUsd.Index].Value = $"{totalPriceInUsd1:N} / {totalPriceInUsd2:N}";
+					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:N8}";
 				}
 			}
 
@@ -333,6 +369,48 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			return Math.Round(priceInUsd, 6);
 		}
 
+		private void SaveMainFormSettings() {
+			var mainFormSettings = new MainFormSettings {
+				GridContainerSplitterPosition = _cntnrGridData.SplitterDistance,
+				GridHoldingsColumns = new List<HoldingsDataGridViewColumnSettings>(),
+				GridHoldingsQuantities = new List<HoldingsDataGridViewCellSettings>(),
+				GridMarketColumns = new List<MarketDataGridViewColumnSettings>(),
+				Height = Size.Height,
+				LocationX = Location.X,
+				LocationY = Location.Y,
+				Width = Size.Width,
+				WindowState = WindowState
+			};
+
+			foreach (var column in _holdingsDataGridViewColumns) {
+				var settings = new HoldingsDataGridViewColumnSettings {
+					FillWeight = column.FillWeight,
+					Tag = (HoldingsDataColumnType)column.Tag,
+					Width = column.Width
+				};
+				mainFormSettings.GridHoldingsColumns.Add(settings);
+			}
+
+			foreach (var row in _holdingsDataGridViewRows) {
+				var settings = new HoldingsDataGridViewCellSettings {
+					Tag = (CurrencyType)row.Tag,
+					Value = row.Cells[_clmnHoldingsQuantity.Index].Value.ToString()
+				};
+				mainFormSettings.GridHoldingsQuantities.Add(settings);
+			}
+
+			foreach (var column in _marketDataGridViewColumns) {
+				var settings = new MarketDataGridViewColumnSettings {
+					FillWeight = column.FillWeight,
+					Tag = (MarketDataColumnType)column.Tag,
+					Width = column.Width
+				};
+				mainFormSettings.GridMarketColumns.Add(settings);
+			}
+
+			_settingsManager.SaveCompleteSettings(new CompleteSettings { MainForm = mainFormSettings });
+		}
+
 		private void SetHoldingsDataColumnType() {
 			_clmnHoldingsCoin.Tag = HoldingsDataColumnType.Coin;
 			_clmnHoldingsPriceInBtc.Tag = HoldingsDataColumnType.PriceInBtc;
@@ -359,12 +437,9 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private readonly ICollection<CurrencyType> _desiredHoldingsCurrencyTypes;
 		private Timer _globalRefreshTimer;
 		private ICollection<DataGridViewColumn> _holdingsDataGridViewColumns;
-		private DataGridViewColumn _holdingsPriceInBtcColumn;
-		private DataGridViewColumn _holdingsPriceInUsdColumn;
+		private ICollection<DataGridViewRow> _holdingsDataGridViewRows;
 		private ICollection<DataGridViewColumn> _marketDataGridViewColumns;
 		private ICollection<DataGridViewRow> _marketDataGridViewRows;
-		private DataGridViewColumn _holdingsQuantityColumn;
-		private DataGridViewColumn _marketPriceInBtcColumn;
-		private DataGridViewColumn _marketPriceInUsdColumn;
+		private readonly SettingsManager _settingsManager;
 	}
 }
