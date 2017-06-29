@@ -90,10 +90,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void InitializeDataGridViewFields() {
-			_holdingsDataGridViewColumns = _holdingsDataGridViewColumns ?? _gridHoldingsData.Columns.Cast<DataGridViewColumn>().ToList();
-			_holdingsDataGridViewRows = _holdingsDataGridViewRows ?? _gridHoldingsData.Rows.Cast<DataGridViewRow>().ToList();
-			_marketDataGridViewColumns = _marketDataGridViewColumns ?? _gridMarketData.Columns.Cast<DataGridViewColumn>().ToList();
-			_marketDataGridViewRows = _marketDataGridViewRows != null ? (_marketDataGridViewRows.Count > 0 ? _marketDataGridViewRows : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList()) : _gridMarketData.Rows.Cast<DataGridViewRow>().ToList();
+			_holdingsDataGridViewColumns = _holdingsDataGridViewColumns ?? _gridHoldingsData.Columns.Cast<DataGridViewColumn>();
+			_holdingsDataGridViewRows = _holdingsDataGridViewRows ?? _gridHoldingsData.Rows.Cast<DataGridViewRow>();
+			_marketDataGridViewColumns = _marketDataGridViewColumns ?? _gridMarketData.Columns.Cast<DataGridViewColumn>();
+			_marketDataGridViewRows = _marketDataGridViewRows != null ? (_marketDataGridViewRows.Any() ? _marketDataGridViewRows : _gridMarketData.Rows.Cast<DataGridViewRow>()) : _gridMarketData.Rows.Cast<DataGridViewRow>();
 		}
 
 		private void InitializeGlobalRefreshTimer() {
@@ -292,7 +292,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			InitializeDataGridViewFields();
 			decimal overallPriceInBtc = 0, overallPriceInUsd1 = 0, overallPriceInUsd2 = 0;
 			
-			foreach (var row in _gridHoldingsData.Rows.Cast<DataGridViewRow>()) {
+			foreach (var row in _holdingsDataGridViewRows) {
 				var correspondingMarketRow = _marketDataGridViewRows.SingleOrDefault(r => r.Tag.Equals(row.Tag));
 				if (correspondingMarketRow != null) {
 					var priceInBtc = decimal.Parse(correspondingMarketRow.Cells[_clmnMarketCurrentBtcPrice.Index].Value.ToString());
@@ -436,10 +436,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private readonly ICollection<CurrencyType> _desiredMarketCurrencyTypes;
 		private readonly ICollection<CurrencyType> _desiredHoldingsCurrencyTypes;
 		private Timer _globalRefreshTimer;
-		private ICollection<DataGridViewColumn> _holdingsDataGridViewColumns;
-		private ICollection<DataGridViewRow> _holdingsDataGridViewRows;
-		private ICollection<DataGridViewColumn> _marketDataGridViewColumns;
-		private ICollection<DataGridViewRow> _marketDataGridViewRows;
+		private IEnumerable<DataGridViewColumn> _holdingsDataGridViewColumns;
+		private IEnumerable<DataGridViewRow> _holdingsDataGridViewRows;
+		private IEnumerable<DataGridViewColumn> _marketDataGridViewColumns;
+		private IEnumerable<DataGridViewRow> _marketDataGridViewRows;
 		private readonly SettingsManager _settingsManager;
 	}
 }
