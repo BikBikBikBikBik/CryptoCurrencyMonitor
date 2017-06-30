@@ -47,6 +47,12 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 		[EnumDisplayName("Storjcoin X")]
 		SJCX,
 
+		[EnumDisplayName("Status Network Token")]
+		SNT,
+
+		[EnumDisplayName("Ubiq")]
+		UBQ,
+
 		[EnumDisplayName("USD")]
 		USD,
 

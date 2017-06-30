@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
@@ -26,7 +28,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 		}
 
 		public void SaveCompleteSettings(CompleteSettings settings) {
-			var completeSettings = JsonConvert.SerializeObject(settings, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+			var completeSettings = JsonConvert.SerializeObject(settings, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), Converters = new List<JsonConverter> { new StringEnumConverter() } });
 
 			File.WriteAllText(_settingsFileName, completeSettings, SETTINGS_FILE_ENCODING);
 		}

@@ -7,6 +7,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 	}
 
 	internal class HoldingsDataGridViewCellSettings : DataGridViewCellSettings {
-		public CurrencyType Tag { get; set; }
+		public CurrencyType RowTag { get; set; }
 	}
 }

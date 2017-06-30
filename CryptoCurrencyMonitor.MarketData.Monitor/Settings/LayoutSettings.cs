@@ -2,12 +2,10 @@
 using System.Windows.Forms;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
-	internal class MainFormSettings {
+	internal class LayoutSettings {
 		public int GridContainerSplitterPosition { get; set; }
 
 		public List<HoldingsDataGridViewColumnSettings> GridHoldingsColumns { get; set; }
-
-		public List<HoldingsDataGridViewCellSettings> GridHoldingsQuantities { get; set; }
 
 		public List<MarketDataGridViewColumnSettings> GridMarketColumns { get; set; }
 
