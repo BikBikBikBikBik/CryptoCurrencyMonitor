@@ -11,8 +11,9 @@ IN PROGRESS
 <br />
 # Coming Soon
 1. Support for all currencies from CoinMarketCap.com
-2. Add/remove currencies and modify other settings without having to manually edit config file
-3. Tests
+2. Notifications (desktop and/or email and/or SMS)
+3. Add/remove currencies and modify other settings without having to manually edit config file
+4. Tests
 <br />
 <br />
 There are no current plans to make this available on platforms other than Windows. If you're interested in a Mac/Linux port (or some other feature) please open an issue.
