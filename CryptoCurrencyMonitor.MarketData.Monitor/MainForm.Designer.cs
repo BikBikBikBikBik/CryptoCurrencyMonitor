@@ -24,9 +24,9 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this._lblLastUpdated = new System.Windows.Forms.Label();
 			this._lblLastUpdatedValue = new System.Windows.Forms.Label();
 			this._prgrssGlobalRefresh = new System.Windows.Forms.ProgressBar();
@@ -95,8 +95,8 @@
 			this._gridMarketData.AllowUserToAddRows = false;
 			this._gridMarketData.AllowUserToDeleteRows = false;
 			this._gridMarketData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this._gridMarketData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this._gridMarketData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this._gridMarketData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -121,7 +121,7 @@
 			this._gridMarketData.RowHeadersWidth = 60;
 			this._gridMarketData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this._gridMarketData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridMarketData.Size = new System.Drawing.Size(1005, 340);
+			this._gridMarketData.Size = new System.Drawing.Size(1005, 256);
 			this._gridMarketData.TabIndex = 5;
 			this._gridMarketData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridMarketDataCellFormatting);
 			this._gridMarketData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridMarketDataSortCompare);
@@ -134,19 +134,19 @@
 			// 
 			// _clmnMarketCurrentUsdPrice
 			// 
-			this._clmnMarketCurrentUsdPrice.HeaderText = "USD (CMC / CC)";
+			this._clmnMarketCurrentUsdPrice.HeaderText = "$ Value";
 			this._clmnMarketCurrentUsdPrice.Name = "_clmnMarketCurrentUsdPrice";
 			this._clmnMarketCurrentUsdPrice.ReadOnly = true;
 			// 
 			// _clmnMarketCurrentBtcPrice
 			// 
-			this._clmnMarketCurrentBtcPrice.HeaderText = "BTC";
+			this._clmnMarketCurrentBtcPrice.HeaderText = "BTC Value";
 			this._clmnMarketCurrentBtcPrice.Name = "_clmnMarketCurrentBtcPrice";
 			this._clmnMarketCurrentBtcPrice.ReadOnly = true;
 			// 
 			// _clmnMarketSatoshi
 			// 
-			this._clmnMarketSatoshi.HeaderText = "Satoshi";
+			this._clmnMarketSatoshi.HeaderText = "Satoshi Value";
 			this._clmnMarketSatoshi.Name = "_clmnMarketSatoshi";
 			this._clmnMarketSatoshi.ReadOnly = true;
 			// 
@@ -209,8 +209,8 @@
 			this._gridHoldingsData.AllowUserToAddRows = false;
 			this._gridHoldingsData.AllowUserToDeleteRows = false;
 			this._gridHoldingsData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this._gridHoldingsData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this._gridHoldingsData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
 			this._gridHoldingsData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -246,13 +246,13 @@
 			// 
 			// _clmnHoldingsPriceInUsd
 			// 
-			this._clmnHoldingsPriceInUsd.HeaderText = "$ Val (CMC / CC)";
+			this._clmnHoldingsPriceInUsd.HeaderText = "$ Value";
 			this._clmnHoldingsPriceInUsd.Name = "_clmnHoldingsPriceInUsd";
 			this._clmnHoldingsPriceInUsd.ReadOnly = true;
 			// 
 			// _clmnHoldingsPriceInBtc
 			// 
-			this._clmnHoldingsPriceInBtc.HeaderText = "BTC Val";
+			this._clmnHoldingsPriceInBtc.HeaderText = "BTC Value";
 			this._clmnHoldingsPriceInBtc.Name = "_clmnHoldingsPriceInBtc";
 			this._clmnHoldingsPriceInBtc.ReadOnly = true;
 			// 
@@ -262,15 +262,15 @@
 			this._lblTotalValUsd.AutoSize = true;
 			this._lblTotalValUsd.Location = new System.Drawing.Point(12, 532);
 			this._lblTotalValUsd.Name = "_lblTotalValUsd";
-			this._lblTotalValUsd.Size = new System.Drawing.Size(118, 13);
+			this._lblTotalValUsd.Size = new System.Drawing.Size(73, 13);
 			this._lblTotalValUsd.TabIndex = 9;
-			this._lblTotalValUsd.Text = "Total $ Val (CMC / CC):";
+			this._lblTotalValUsd.Text = "Total $ Value:";
 			// 
 			// _lblTotalValUsdValue
 			// 
 			this._lblTotalValUsdValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValUsdValue.AutoSize = true;
-			this._lblTotalValUsdValue.Location = new System.Drawing.Point(136, 532);
+			this._lblTotalValUsdValue.Location = new System.Drawing.Point(91, 532);
 			this._lblTotalValUsdValue.Name = "_lblTotalValUsdValue";
 			this._lblTotalValUsdValue.Size = new System.Drawing.Size(112, 13);
 			this._lblTotalValUsdValue.TabIndex = 10;
@@ -282,15 +282,15 @@
 			this._lblTotalValBtc.AutoSize = true;
 			this._lblTotalValBtc.Location = new System.Drawing.Point(334, 532);
 			this._lblTotalValBtc.Name = "_lblTotalValBtc";
-			this._lblTotalValBtc.Size = new System.Drawing.Size(76, 13);
+			this._lblTotalValBtc.Size = new System.Drawing.Size(88, 13);
 			this._lblTotalValBtc.TabIndex = 11;
-			this._lblTotalValBtc.Text = "Total BTC Val:";
+			this._lblTotalValBtc.Text = "Total BTC Value:";
 			// 
 			// _lblTotalValBtcValue
 			// 
 			this._lblTotalValBtcValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValBtcValue.AutoSize = true;
-			this._lblTotalValBtcValue.Location = new System.Drawing.Point(416, 532);
+			this._lblTotalValBtcValue.Location = new System.Drawing.Point(428, 532);
 			this._lblTotalValBtcValue.Name = "_lblTotalValBtcValue";
 			this._lblTotalValBtcValue.Size = new System.Drawing.Size(110, 13);
 			this._lblTotalValBtcValue.TabIndex = 12;
@@ -360,6 +360,11 @@
 		private System.Windows.Forms.Button _btnPauseRefreshTimer;
 		private System.Windows.Forms.NotifyIcon _ntfyMain;
 		private System.Windows.Forms.DataGridView _gridHoldingsData;
+		private System.Windows.Forms.Label _lblTotalValUsd;
+		private System.Windows.Forms.Label _lblTotalValUsdValue;
+		private System.Windows.Forms.Label _lblTotalValBtc;
+		private System.Windows.Forms.Label _lblTotalValBtcValue;
+		private System.Windows.Forms.SplitContainer _cntnrGridData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCoin;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCurrentUsdPrice;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketCurrentBtcPrice;
@@ -370,11 +375,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketVolumeUsd24h;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketMarketCapUsd;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnMarketRank;
-		private System.Windows.Forms.Label _lblTotalValUsd;
-		private System.Windows.Forms.Label _lblTotalValUsdValue;
-		private System.Windows.Forms.Label _lblTotalValBtc;
-		private System.Windows.Forms.Label _lblTotalValBtcValue;
-		private System.Windows.Forms.SplitContainer _cntnrGridData;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsCoin;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsQuantity;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInUsd;

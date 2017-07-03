@@ -1,5 +1,4 @@
 ﻿using System;
-using CryptoCurrencyMonitor.MarketData.Client;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 	internal class DataGridViewCellSettings {
@@ -7,6 +6,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 	}
 
 	internal class HoldingsDataGridViewCellSettings : DataGridViewCellSettings {
-		public CurrencyType RowTag { get; set; }
+		public int RowTag { get; set; }
 	}
 }

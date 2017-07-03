@@ -1,0 +1,58 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetDir)\CryptoCurrencyMonitor.Common.dll" #>
+<#@ assembly name="$(TargetDir)\CryptoCurrencyMonitor.MarketData.Client.dll" #>
+<#@ assembly name="$(TargetDir)\Newtonsoft.Json.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Net" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Threading.Tasks" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap" #>
+<#@ import namespace="Newtonsoft.Json" #>
+<#@ import namespace="Newtonsoft.Json.Linq" #>
+<#@ output extension=".txt" #>
+<#
+	var webClient = new WebClient();
+	var tickerString = webClient.DownloadString("https://api.coinmarketcap.com/v1/ticker/");
+	var ticker = JArray.Parse(tickerString);
+	var foo = String.Empty;
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CryptoCurrencyMonitor.MarketData.Client {
+	public static class CurrencyTypeRegistry {
+		public static int GetIdFromName(String name) {
+			try {
+				var desiredEntry = CurrencyTypeMap.Single(kv => kv.Value.Item2.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+				return desiredEntry.Key;
+			} catch {
+				return -1;
+			}
+		}
+
+		public static Tuple<String, String> GetNameAndSymbolFromId(int id) {
+			if (!CurrencyTypeMap.ContainsKey(id)) {
+				return null;
+			}
+
+			return CurrencyTypeMap[id];
+		}
+
+		private static readonly IDictionary<int, Tuple<String, String>> CurrencyTypeMap = new Dictionary<int, Tuple<String, String>> {
+<#
+	foreach (var coin in ticker.OrderBy(c => c["symbol"].Value<String>())) {
+		var coinName = coin["name"].Value<String>();
+		var coinSymbol = coin["symbol"].Value<String>();
+#>
+			{ <#= (coinName + coinSymbol).GetHashCode() #>, new Tuple<String, String>("<#= coinSymbol #>", "<#= coinName #>") },
+<#
+	}
+#>
+		};
+	}
+}

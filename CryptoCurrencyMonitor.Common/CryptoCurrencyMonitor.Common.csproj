@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\EnumDisplayNameAttribute.cs" />
     <Compile Include="Http\ClientBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

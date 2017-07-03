@@ -53,10 +53,7 @@
     <Compile Include="CoinMarketCap\CurrencyTickerConverter.cs" />
     <Compile Include="CoinMarketCap\CurrencyTickerDto.cs" />
     <Compile Include="CryptoCompare\ApiClient.cs" />
-    <Compile Include="CurrencyType.cs" />
     <Compile Include="CurrencyTypeRegistry.cs" />
-    <Compile Include="Extensions\CurrencyTypeExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConversion\TypeRegistry.cs" />
   </ItemGroup>
@@ -69,6 +66,21 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="CurrencyTypeRegistryTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CurrencyTypeRegistryTemplate.txt</LastGenOutput>
+    </Content>
+    <Content Include="CurrencyTypeRegistryTemplate.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyTypeRegistryTemplate.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,7 @@
 
 namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
 	public class CurrencyTicker {
-		public String Id { get; set; }
+		public int Id { get; set; }
 
 		public DateTime LastUpdatedOn { get; set; }
 
@@ -22,7 +22,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
 
 		public decimal PriceInUsd { get; set; }
 
-		public CurrencyType Symbol { get; set; }
+		public String Symbol { get; set; }
 
 		public decimal VolumeInUsd24H { get; set; }
 	}
