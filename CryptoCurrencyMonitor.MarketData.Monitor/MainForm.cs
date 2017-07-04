@@ -243,8 +243,22 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		#endregion
 
 		private async Task RefreshAllData() {
-			await RefreshMarketData();
-			RefreshHoldingsData();
+			_btnPauseRefreshTimer.Enabled = false;
+			_globalRefreshTimer.Stop();
+			_lblLastUpdatedValue.Text = $"{_lblLastUpdatedValue.Text} [IN PROGRESS]";
+			_ntfyMain.Text = "Updating...";
+
+			try {
+				await RefreshMarketData();
+				RefreshHoldingsData();
+			} catch (Exception e) {
+				//TODO: Coming soon...
+			}
+
+			_lblLastUpdatedValue.Text = DateTime.Now.ToLongTimeString();
+			_ntfyMain.Text = $"{_lblLastUpdated.Text} {_lblLastUpdatedValue.Text}";
+			_globalRefreshTimer.Start();
+			_btnPauseRefreshTimer.Enabled = true;
 		}
 
 		private void RefreshHoldingsData() {
@@ -276,22 +290,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private async Task RefreshMarketData() {
-			_btnPauseRefreshTimer.Enabled = false;
-			_globalRefreshTimer.Stop();
-			_lblLastUpdatedValue.Text = $"{_lblLastUpdatedValue.Text} [IN PROGRESS]";
-			_ntfyMain.Text = "Updating...";
-			try {
-				await RetrieveAndDisplayMarketData();
-			} catch (Exception e) {
-				//TODO: Coming soon...
-			}
-			_lblLastUpdatedValue.Text = DateTime.Now.ToLongTimeString();
-			_ntfyMain.Text = $"{_lblLastUpdated.Text} {_lblLastUpdatedValue.Text}";
-			_globalRefreshTimer.Start();
-			_btnPauseRefreshTimer.Enabled = true;
-		}
-
-		private async Task RetrieveAndDisplayMarketData() {
 			var tickerData = await _coinMarketCapClient.GetTicker();
 
 			_gridMarketData.Rows.Clear();
