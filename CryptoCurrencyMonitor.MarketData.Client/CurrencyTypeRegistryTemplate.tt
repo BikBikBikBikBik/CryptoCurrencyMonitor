@@ -43,7 +43,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			return CurrencyTypeMap[id];
 		}
 
-		private static readonly IDictionary<int, Tuple<String, String>> CurrencyTypeMap = new Dictionary<int, Tuple<String, String>> {
+		public static readonly IReadOnlyDictionary<int, Tuple<String, String>> CurrencyTypeMap = new Dictionary<int, Tuple<String, String>> {
 <#
 	foreach (var coin in ticker.OrderBy(c => c["symbol"].Value<String>())) {
 		var coinName = coin["name"].Value<String>();

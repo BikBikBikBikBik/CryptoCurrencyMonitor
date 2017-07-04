@@ -22,7 +22,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			return CurrencyTypeMap[id];
 		}
 
-		private static readonly IDictionary<int, Tuple<String, String>> CurrencyTypeMap = new Dictionary<int, Tuple<String, String>> {
+		public static readonly IReadOnlyDictionary<int, Tuple<String, String>> CurrencyTypeMap = new Dictionary<int, Tuple<String, String>> {
 			{ -1648196256, new Tuple<String, String>("$$$", "Money") },
 			{ 893417978, new Tuple<String, String>("1337", "1337") },
 			{ -63829232, new Tuple<String, String>("1CR", "1CRedit") },
@@ -252,7 +252,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ -1135999225, new Tuple<String, String>("DBTC", "Debitcoin") },
 			{ 575717233, new Tuple<String, String>("DCR", "Decred") },
 			{ 1996610497, new Tuple<String, String>("DCRE", "DeltaCredits") },
-			{ 759825235, new Tuple<String, String>("DCT", "DECENT (Pre-Launch)") },
+			{ -2035216121, new Tuple<String, String>("DCT", "DECENT") },
 			{ 794981559, new Tuple<String, String>("DCY", "Dinastycoin") },
 			{ 1565362992, new Tuple<String, String>("DEM", "Deutsche eMark") },
 			{ 1650241847, new Tuple<String, String>("DES", "Destiny") },
@@ -522,6 +522,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ -1550160105, new Tuple<String, String>("MAY", "Theresa May Coin") },
 			{ -1351391290, new Tuple<String, String>("MBL", "MobileCash") },
 			{ -1364081762, new Tuple<String, String>("MCAP", "MCAP") },
+			{ -726023783, new Tuple<String, String>("MCO", "Monaco") },
 			{ -1987944158, new Tuple<String, String>("MCRN", "MACRON") },
 			{ -1039145368, new Tuple<String, String>("MEC", "Megacoin") },
 			{ 1603269377, new Tuple<String, String>("MED", "MediterraneanCoin") },
@@ -626,6 +627,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ -1769873258, new Tuple<String, String>("PI", "PiCoin") },
 			{ -1034403001, new Tuple<String, String>("PIE", "PIECoin") },
 			{ -1610833274, new Tuple<String, String>("PIGGY", "Piggycoin") },
+			{ -10956201, new Tuple<String, String>("PING", "CryptoPing") },
 			{ 1165614828, new Tuple<String, String>("PINK", "PinkCoin") },
 			{ -1536137579, new Tuple<String, String>("PIP", "PipCoin") },
 			{ 56644498, new Tuple<String, String>("PIVX", "PIVX") },
