@@ -45,6 +45,7 @@
 			this._lstUnselectedCurrencies.FormattingEnabled = true;
 			this._lstUnselectedCurrencies.Location = new System.Drawing.Point(3, 3);
 			this._lstUnselectedCurrencies.Name = "_lstUnselectedCurrencies";
+			this._lstUnselectedCurrencies.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this._lstUnselectedCurrencies.Size = new System.Drawing.Size(311, 485);
 			this._lstUnselectedCurrencies.TabIndex = 0;
 			// 
@@ -56,6 +57,7 @@
 			this._lstSelectedCurrencies.FormattingEnabled = true;
 			this._lstSelectedCurrencies.Location = new System.Drawing.Point(3, 3);
 			this._lstSelectedCurrencies.Name = "_lstSelectedCurrencies";
+			this._lstSelectedCurrencies.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this._lstSelectedCurrencies.Size = new System.Drawing.Size(311, 485);
 			this._lstSelectedCurrencies.TabIndex = 0;
 			// 
@@ -104,6 +106,7 @@
 			this._btnAddSelectedCurrencies.TabIndex = 1;
 			this._btnAddSelectedCurrencies.Text = "Add Selected";
 			this._btnAddSelectedCurrencies.UseVisualStyleBackColor = true;
+			this._btnAddSelectedCurrencies.Click += new System.EventHandler(this.OnBtnAddSelectedCurrenciesClick);
 			// 
 			// _btnCancel
 			// 
@@ -127,6 +130,7 @@
 			this._btnRemoveSelectedCurrencies.TabIndex = 2;
 			this._btnRemoveSelectedCurrencies.Text = "Remove Selected";
 			this._btnRemoveSelectedCurrencies.UseVisualStyleBackColor = true;
+			this._btnRemoveSelectedCurrencies.Click += new System.EventHandler(this.OnBtnRemoveSelectedCurrenciesClick);
 			// 
 			// CurrencySelectionForm
 			// 
