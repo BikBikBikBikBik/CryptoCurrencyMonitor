@@ -36,23 +36,38 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		#region Event Handlers
 		private void OnBtnAddSelectedCurrenciesClick(object sender, System.EventArgs e) {
+			SetButtonStates(false);
+
 			foreach (var item in _lstUnselectedCurrencies.SelectedItems.Cast<Currency>().ToList()) {
 				_selectedCurrenciesDataSource.Add(item);
 				_unselectedCurrenciesDataSource.Remove(item);
 			}
+
+			SetButtonStates(true);
 		}
 
 		private void OnBtnRemoveSelectedCurrenciesClick(object sender, System.EventArgs e) {
+			SetButtonStates(false);
+
 			foreach (var item in _lstSelectedCurrencies.SelectedItems.Cast<Currency>().ToList()) {
 				_selectedCurrenciesDataSource.Remove(item);
 				_unselectedCurrenciesDataSource.Add(item);
 			}
+			
+			SetButtonStates(true);
 		}
 		#endregion
+
+		private void SetButtonStates(bool isEnabled) {
+			_btnAddSelectedCurrencies.Enabled = isEnabled;
+			_btnCancel.Enabled = isEnabled;
+			_btnOk.Enabled = isEnabled;
+			_btnRemoveSelectedCurrencies.Enabled = isEnabled;
+		}
 
 		private readonly ICollection<int> _selectedCurrencyTypes;
 		private BindingList<Currency> _selectedCurrenciesDataSource;
 		private BindingList<Currency> _unselectedCurrenciesDataSource;
-		private static readonly IReadOnlyCollection<Currency> AllCurrencies = CurrencyTypeRegistry.CurrencyTypeMap.Select(kv => new Currency { Id = kv.Key, Name = kv.Value.Item2, Symbol = kv.Value.Item1 }).ToList();
+		private static readonly IReadOnlyCollection<Currency> AllCurrencies = CurrencyTypeRegistry.CurrencyTypeMap.Select(kv => new Currency(kv.Key) { Name = kv.Value.Item2, Symbol = kv.Value.Item1 }).ToList();
 	}
 }
