@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrencySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurrencySelectionForm.Designer.cs">
+      <DependentUpon>CurrencySelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MarketDataColumnType.cs" />
     <Compile Include="HoldingsDataColumnType.cs" />
     <Compile Include="MainForm.cs">
@@ -66,6 +72,9 @@
     <Compile Include="Settings\DataGridViewColumnSettings.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
+    <EmbeddedResource Include="CurrencySelectionForm.resx">
+      <DependentUpon>CurrencySelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
