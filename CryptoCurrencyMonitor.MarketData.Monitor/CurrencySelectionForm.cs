@@ -63,7 +63,9 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				sourceDataSource = new BindingList<Currency>(tempSource);
 				sourceList.DataSource = sourceDataSource;
 				sourceList.SelectedIndices.Clear();
-				sourceList.SelectedIndices.Add(selectedIndices[0] > 0 ? selectedIndices[0] - 1 : 0);
+				if (sourceDataSource.Count > 0) {
+					sourceList.SelectedIndices.Add(selectedIndices[0] > 0 ? selectedIndices[0] - 1 : 0);
+				}
 
 				SetButtonStates(true);
 			}
