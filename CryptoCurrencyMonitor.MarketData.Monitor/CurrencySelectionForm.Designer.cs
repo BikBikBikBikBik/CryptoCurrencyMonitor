@@ -139,7 +139,7 @@
 			this.ClientSize = new System.Drawing.Size(662, 608);
 			this.Controls.Add(this._cntnr);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(670, 628);
+			this.MinimumSize = new System.Drawing.Size(670, 635);
 			this.Name = "CurrencySelectionForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Select Currencies";

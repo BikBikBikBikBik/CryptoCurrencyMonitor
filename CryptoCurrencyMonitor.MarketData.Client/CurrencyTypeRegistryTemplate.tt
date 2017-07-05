@@ -1,15 +1,8 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetDir)\CryptoCurrencyMonitor.Common.dll" #>
-<#@ assembly name="$(TargetDir)\CryptoCurrencyMonitor.MarketData.Client.dll" #>
 <#@ assembly name="$(TargetDir)\Newtonsoft.Json.dll" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Net" #>
-<#@ import namespace="System.Reflection" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Threading.Tasks" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap" #>
 <#@ import namespace="Newtonsoft.Json" #>
 <#@ import namespace="Newtonsoft.Json.Linq" #>
 <#@ output extension=".txt" #>
