@@ -40,6 +40,18 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void OnBtnRemoveSelectedCurrenciesClick(object sender, System.EventArgs e) {
 			MoveSelectedCurrencies(_lstSelectedCurrencies, ref _selectedCurrenciesDataSource, _lstUnselectedCurrencies, ref _unselectedCurrenciesDataSource);
 		}
+
+		private void OnLstSelectedCurrenciesMouseDoubleClick(object sender, MouseEventArgs e) {
+			if (_lstSelectedCurrencies.IndexFromPoint(e.Location) != ListBox.NoMatches) {
+				MoveSelectedCurrencies(_lstSelectedCurrencies, ref _selectedCurrenciesDataSource, _lstUnselectedCurrencies, ref _unselectedCurrenciesDataSource);
+			}
+		}
+
+		private void OnLstUnselectedCurrenciesMouseDoubleClick(object sender, MouseEventArgs e) {
+			if (_lstUnselectedCurrencies.IndexFromPoint(e.Location) != ListBox.NoMatches) {
+				MoveSelectedCurrencies(_lstUnselectedCurrencies, ref _unselectedCurrenciesDataSource, _lstSelectedCurrencies, ref _selectedCurrenciesDataSource);
+			}
+		}
 		#endregion
 
 		private void MoveSelectedCurrencies(ListBox sourceList, ref BindingList<Currency> sourceDataSource, ListBox destinationList, ref BindingList<Currency> destinationDataSource) {

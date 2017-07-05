@@ -48,6 +48,7 @@
 			this._lstUnselectedCurrencies.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this._lstUnselectedCurrencies.Size = new System.Drawing.Size(311, 485);
 			this._lstUnselectedCurrencies.TabIndex = 0;
+			this._lstUnselectedCurrencies.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnLstUnselectedCurrenciesMouseDoubleClick);
 			// 
 			// _lstSelectedCurrencies
 			// 
@@ -60,6 +61,7 @@
 			this._lstSelectedCurrencies.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this._lstSelectedCurrencies.Size = new System.Drawing.Size(311, 485);
 			this._lstSelectedCurrencies.TabIndex = 0;
+			this._lstSelectedCurrencies.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnLstSelectedCurrenciesMouseDoubleClick);
 			// 
 			// _cntnr
 			// 
