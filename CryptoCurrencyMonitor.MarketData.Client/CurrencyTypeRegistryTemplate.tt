@@ -17,7 +17,6 @@
 	var webClient = new WebClient();
 	var tickerString = webClient.DownloadString("https://api.coinmarketcap.com/v1/ticker/");
 	var ticker = JArray.Parse(tickerString);
-	var foo = String.Empty;
 #>
 using System;
 using System.Collections.Generic;
