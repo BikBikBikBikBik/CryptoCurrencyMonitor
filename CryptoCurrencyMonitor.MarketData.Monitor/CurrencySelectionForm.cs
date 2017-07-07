@@ -14,9 +14,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			InitializeCurrencyLists();
 		}
 
-		public ICollection<int> SelectedCurrencyIds => _lstSelectedCurrencies.Items.Cast<Currency>().Select(c => c.Id).ToList();
-
-		public ICollection<int> UnselectedCurrencyIds => _lstUnselectedCurrencies.Items.Cast<Currency>().Select(c => c.Id).ToList();
+		public List<int> SelectedCurrencyIds => _lstSelectedCurrencies.Items.Cast<Currency>().Select(c => c.Id).ToList();
 
 		private void InitializeCurrencyLists() {
 			var currencySelectionGrouping = AllCurrencies.GroupBy(c => _selectedCurrencyTypes.Contains(c.Id)).ToList();

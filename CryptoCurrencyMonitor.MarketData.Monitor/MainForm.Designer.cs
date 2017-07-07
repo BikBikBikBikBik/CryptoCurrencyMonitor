@@ -54,11 +54,11 @@
 			this._lblTotalValBtcValue = new System.Windows.Forms.Label();
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
 			this._menuMain = new System.Windows.Forms.MenuStrip();
-			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.currencyListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.holdingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.marketToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemFileQuit = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemCurrencyList = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemCurrencyListHoldings = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemCurrencyListMarket = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
@@ -329,8 +329,8 @@
 			// _menuMain
 			// 
 			this._menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.currencyListToolStripMenuItem});
+            this._menuItemFile,
+            this._menuItemCurrencyList});
 			this._menuMain.Location = new System.Drawing.Point(0, 0);
 			this._menuMain.Name = "_menuMain";
 			this._menuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -338,40 +338,43 @@
 			this._menuMain.TabIndex = 14;
 			this._menuMain.Text = "menuStrip1";
 			// 
-			// fileToolStripMenuItem
+			// _menuItemFile
 			// 
-			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.quitToolStripMenuItem});
-			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-			this.fileToolStripMenuItem.Text = "&File";
+			this._menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuItemFileQuit});
+			this._menuItemFile.Name = "_menuItemFile";
+			this._menuItemFile.Size = new System.Drawing.Size(35, 20);
+			this._menuItemFile.Text = "&File";
 			// 
-			// currencyListToolStripMenuItem
+			// _menuItemFileQuit
 			// 
-			this.currencyListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.holdingsToolStripMenuItem1,
-            this.marketToolStripMenuItem1});
-			this.currencyListToolStripMenuItem.Name = "currencyListToolStripMenuItem";
-			this.currencyListToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-			this.currencyListToolStripMenuItem.Text = "&Currency List";
+			this._menuItemFileQuit.Name = "_menuItemFileQuit";
+			this._menuItemFileQuit.Size = new System.Drawing.Size(152, 22);
+			this._menuItemFileQuit.Text = "&Quit";
+			this._menuItemFileQuit.Click += new System.EventHandler(this.OnMenuItemFileQuitClick);
 			// 
-			// holdingsToolStripMenuItem1
+			// _menuItemCurrencyList
 			// 
-			this.holdingsToolStripMenuItem1.Name = "holdingsToolStripMenuItem1";
-			this.holdingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-			this.holdingsToolStripMenuItem1.Text = "&Holdings";
+			this._menuItemCurrencyList.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuItemCurrencyListHoldings,
+            this._menuItemCurrencyListMarket});
+			this._menuItemCurrencyList.Name = "_menuItemCurrencyList";
+			this._menuItemCurrencyList.Size = new System.Drawing.Size(82, 20);
+			this._menuItemCurrencyList.Text = "&Currency List";
 			// 
-			// marketToolStripMenuItem1
+			// _menuItemCurrencyListHoldings
 			// 
-			this.marketToolStripMenuItem1.Name = "marketToolStripMenuItem1";
-			this.marketToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-			this.marketToolStripMenuItem1.Text = "&Market";
+			this._menuItemCurrencyListHoldings.Name = "_menuItemCurrencyListHoldings";
+			this._menuItemCurrencyListHoldings.Size = new System.Drawing.Size(152, 22);
+			this._menuItemCurrencyListHoldings.Text = "&Holdings";
+			this._menuItemCurrencyListHoldings.Click += new System.EventHandler(this.OnMenuItemCurrencyListHoldingsClick);
 			// 
-			// quitToolStripMenuItem
+			// _menuItemCurrencyListMarket
 			// 
-			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-			this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.quitToolStripMenuItem.Text = "&Quit";
+			this._menuItemCurrencyListMarket.Name = "_menuItemCurrencyListMarket";
+			this._menuItemCurrencyListMarket.Size = new System.Drawing.Size(152, 22);
+			this._menuItemCurrencyListMarket.Text = "&Market";
+			this._menuItemCurrencyListMarket.Click += new System.EventHandler(this.OnMenuItemCurrencyListMarketClick);
 			// 
 			// MainForm
 			// 
@@ -438,11 +441,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInUsd;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInBtc;
 		private System.Windows.Forms.MenuStrip _menuMain;
-		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem currencyListToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem holdingsToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem marketToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemFile;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemFileQuit;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyList;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyListHoldings;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyListMarket;
 	}
 }
 

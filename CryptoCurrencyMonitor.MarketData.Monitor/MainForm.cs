@@ -25,6 +25,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValBtcValue.Text = "0.00000000";
 			_lblTotalValUsdValue.Text = "0.00";
 			_ntfyMain.Text = String.Empty;
+			_tickerData = new List<CurrencyTicker>();
 			
 			SetMarketDataColumnTags();
 			SetHoldingsDataColumnType();
@@ -199,25 +200,21 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void OnGridHoldingsDataCellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
 			var columnTag = _gridHoldingsData.Columns[e.ColumnIndex].Tag;
-			if (columnTag is HoldingsDataColumnType) {
-				var specificColumnTag = (HoldingsDataColumnType)columnTag;
-
-				switch (specificColumnTag) {
-					case HoldingsDataColumnType.Quantity:
-						if (e.FormattedValue == null || String.IsNullOrWhiteSpace(e.FormattedValue.ToString())) {
+			switch ((HoldingsDataColumnType)columnTag) {
+				case HoldingsDataColumnType.Quantity:
+					if (e.FormattedValue == null || String.IsNullOrWhiteSpace(e.FormattedValue.ToString())) {
+						e.Cancel = true;
+					} else {
+						decimal quantity;
+						if (!decimal.TryParse(e.FormattedValue.ToString(), out quantity)) {
 							e.Cancel = true;
-						} else {
-							decimal quantity;
-							if (!decimal.TryParse(e.FormattedValue.ToString(), out quantity)) {
-								e.Cancel = true;
-							}
 						}
+					}
 
-						if (!e.Cancel) {
-							RefreshHoldingsData();
-						}
-					break;
-				}
+					if (!e.Cancel) {
+						RefreshHoldingsData(_tickerData);
+					}
+				break;
 			}
 		}
 
@@ -235,6 +232,30 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 
 			e.Handled = true;
+		}
+
+		private void OnMenuItemCurrencyListHoldingsClick(object sender, EventArgs e) {
+			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.HoldingsCurrencyTypes)) {
+				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
+					_completeSettings.Monitoring.HoldingsCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
+					SaveHoldingsSettings(_completeSettings);
+					ApplyHoldingsSettings(_completeSettings);
+					RefreshHoldingsData(_tickerData);
+				}
+			}
+		}
+
+		private async void OnMenuItemCurrencyListMarketClick(object sender, EventArgs e) {
+			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.MarketCurrencyTypes)) {
+				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
+					_completeSettings.Monitoring.MarketCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
+					await RefreshAllData();
+				}
+			}
+		}
+
+		private void OnMenuItemFileQuitClick(object sender, EventArgs e) {
+			Application.Exit();
 		}
 
 		private void OnNtfyMainMouseDoubleClick(object sender, MouseEventArgs e) {
@@ -255,8 +276,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_ntfyMain.Text = "Updating...";
 
 			try {
-				await RefreshMarketData();
-				RefreshHoldingsData();
+				_tickerData = await RefreshMarketData(_completeSettings.Monitoring);
+				RefreshHoldingsData(_tickerData);
 			} catch (Exception e) {
 				//TODO: Coming soon...
 			}
@@ -264,24 +285,21 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblLastUpdatedValue.Text = DateTime.Now.ToLongTimeString();
 			_ntfyMain.Text = $"{_lblLastUpdated.Text} {_lblLastUpdatedValue.Text}";
 			_globalRefreshTimer.Start();
+			_btnPauseRefreshTimer.Text = "Pause";
 			_btnPauseRefreshTimer.Enabled = true;
 		}
 
-		private void RefreshHoldingsData() {
-			InitializeDataGridViewFields();
+		private void RefreshHoldingsData(ICollection<CurrencyTicker> tickerData) {
 			decimal overallPriceInBtc = 0, overallPriceInUsd = 0;
-			
-			foreach (var row in _holdingsDataGridViewRows) {
-				var correspondingMarketRow = _marketDataGridViewRows.SingleOrDefault(r => r.Tag.Equals(row.Tag));
-				if (correspondingMarketRow != null) {
-					var priceInBtc = decimal.Parse(correspondingMarketRow.Cells[_clmnMarketCurrentBtcPrice.Index].Value.ToString());
-					var priceInUsd = decimal.Parse(correspondingMarketRow.Cells[_clmnMarketCurrentUsdPrice.Index].Value.ToString());
 
+			foreach (var row in _holdingsDataGridViewRows) {
+				var desiredCurrency = tickerData.SingleOrDefault(c => c.Id == (int)row.Tag);
+				if (desiredCurrency != null) {
 					//Use EditedFormattedValue here because if this was called from the DataCellValidating event then the Value
 					// field will not yet have the new value.
 					var quantity = decimal.Parse(row.Cells[_clmnHoldingsQuantity.Index].EditedFormattedValue.ToString());
-					var totalPriceInBtc = quantity * priceInBtc;
-					var totalPriceInUsd = quantity * priceInUsd;
+					var totalPriceInBtc = quantity * desiredCurrency.PriceInBtc;
+					var totalPriceInUsd = quantity * desiredCurrency.PriceInUsd;
 
 					overallPriceInBtc += totalPriceInBtc;
 					overallPriceInUsd += totalPriceInUsd;
@@ -295,11 +313,11 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
 		}
 
-		private async Task RefreshMarketData() {
+		private async Task<ICollection<CurrencyTicker>> RefreshMarketData(MonitoringSettings monitoringSettings) {
 			var tickerData = await _coinMarketCapClient.GetTicker();
 
 			_gridMarketData.Rows.Clear();
-			foreach (var desiredCurrency in _completeSettings.Monitoring.MarketCurrencyTypes) {
+			foreach (var desiredCurrency in monitoringSettings.MarketCurrencyTypes) {
 				var currencyTicker = tickerData.SingleOrDefault(c => c.Id == desiredCurrency);
 
 				if (currencyTicker != null) {
@@ -311,6 +329,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					_gridMarketData.Rows.Add(newRow);
 				}
 			}
+
+			return tickerData;
 		}
 
 		private void SaveCompleteSettings() {
@@ -401,5 +421,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private IEnumerable<DataGridViewColumn> _marketDataGridViewColumns;
 		private IEnumerable<DataGridViewRow> _marketDataGridViewRows;
 		private readonly SettingsManager _settingsManager;
+		private ICollection<CurrencyTicker> _tickerData;
 	}
 }
