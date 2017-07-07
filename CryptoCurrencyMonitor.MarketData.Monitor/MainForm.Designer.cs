@@ -53,19 +53,26 @@
 			this._lblTotalValBtc = new System.Windows.Forms.Label();
 			this._lblTotalValBtcValue = new System.Windows.Forms.Label();
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
+			this._menuMain = new System.Windows.Forms.MenuStrip();
+			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.currencyListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.holdingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.marketToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
 			this._cntnrGridData.Panel1.SuspendLayout();
 			this._cntnrGridData.Panel2.SuspendLayout();
 			this._cntnrGridData.SuspendLayout();
+			this._menuMain.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// _lblLastUpdated
 			// 
 			this._lblLastUpdated.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblLastUpdated.AutoSize = true;
-			this._lblLastUpdated.Location = new System.Drawing.Point(835, 532);
+			this._lblLastUpdated.Location = new System.Drawing.Point(833, 559);
 			this._lblLastUpdated.Name = "_lblLastUpdated";
 			this._lblLastUpdated.Size = new System.Drawing.Size(74, 13);
 			this._lblLastUpdated.TabIndex = 2;
@@ -75,7 +82,7 @@
 			// 
 			this._lblLastUpdatedValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this._lblLastUpdatedValue.AutoSize = true;
-			this._lblLastUpdatedValue.Location = new System.Drawing.Point(915, 532);
+			this._lblLastUpdatedValue.Location = new System.Drawing.Point(913, 559);
 			this._lblLastUpdatedValue.Name = "_lblLastUpdatedValue";
 			this._lblLastUpdatedValue.Size = new System.Drawing.Size(106, 13);
 			this._lblLastUpdatedValue.TabIndex = 3;
@@ -85,7 +92,7 @@
 			// 
 			this._prgrssGlobalRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this._prgrssGlobalRefresh.Location = new System.Drawing.Point(12, 557);
+			this._prgrssGlobalRefresh.Location = new System.Drawing.Point(10, 584);
 			this._prgrssGlobalRefresh.Name = "_prgrssGlobalRefresh";
 			this._prgrssGlobalRefresh.Size = new System.Drawing.Size(928, 23);
 			this._prgrssGlobalRefresh.TabIndex = 4;
@@ -121,7 +128,7 @@
 			this._gridMarketData.RowHeadersWidth = 60;
 			this._gridMarketData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this._gridMarketData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridMarketData.Size = new System.Drawing.Size(1005, 256);
+			this._gridMarketData.Size = new System.Drawing.Size(1006, 255);
 			this._gridMarketData.TabIndex = 5;
 			this._gridMarketData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridMarketDataCellFormatting);
 			this._gridMarketData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridMarketDataSortCompare);
@@ -189,7 +196,7 @@
 			// _btnPauseRefreshTimer
 			// 
 			this._btnPauseRefreshTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this._btnPauseRefreshTimer.Location = new System.Drawing.Point(946, 557);
+			this._btnPauseRefreshTimer.Location = new System.Drawing.Point(944, 584);
 			this._btnPauseRefreshTimer.Name = "_btnPauseRefreshTimer";
 			this._btnPauseRefreshTimer.Size = new System.Drawing.Size(75, 23);
 			this._btnPauseRefreshTimer.TabIndex = 6;
@@ -222,13 +229,13 @@
             this._clmnHoldingsQuantity,
             this._clmnHoldingsPriceInUsd,
             this._clmnHoldingsPriceInBtc});
-			this._gridHoldingsData.Location = new System.Drawing.Point(0, 3);
+			this._gridHoldingsData.Location = new System.Drawing.Point(3, 3);
 			this._gridHoldingsData.Name = "_gridHoldingsData";
 			this._gridHoldingsData.RowHeadersVisible = false;
 			this._gridHoldingsData.RowHeadersWidth = 60;
 			this._gridHoldingsData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this._gridHoldingsData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this._gridHoldingsData.Size = new System.Drawing.Size(1006, 249);
+			this._gridHoldingsData.Size = new System.Drawing.Size(1006, 257);
 			this._gridHoldingsData.TabIndex = 7;
 			this._gridHoldingsData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.OnGridHoldingsDataCellValidating);
 			this._gridHoldingsData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridHoldingsDataSortCompare);
@@ -260,7 +267,7 @@
 			// 
 			this._lblTotalValUsd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValUsd.AutoSize = true;
-			this._lblTotalValUsd.Location = new System.Drawing.Point(12, 532);
+			this._lblTotalValUsd.Location = new System.Drawing.Point(10, 559);
 			this._lblTotalValUsd.Name = "_lblTotalValUsd";
 			this._lblTotalValUsd.Size = new System.Drawing.Size(73, 13);
 			this._lblTotalValUsd.TabIndex = 9;
@@ -270,7 +277,7 @@
 			// 
 			this._lblTotalValUsdValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValUsdValue.AutoSize = true;
-			this._lblTotalValUsdValue.Location = new System.Drawing.Point(91, 532);
+			this._lblTotalValUsdValue.Location = new System.Drawing.Point(89, 559);
 			this._lblTotalValUsdValue.Name = "_lblTotalValUsdValue";
 			this._lblTotalValUsdValue.Size = new System.Drawing.Size(112, 13);
 			this._lblTotalValUsdValue.TabIndex = 10;
@@ -280,7 +287,7 @@
 			// 
 			this._lblTotalValBtc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValBtc.AutoSize = true;
-			this._lblTotalValBtc.Location = new System.Drawing.Point(334, 532);
+			this._lblTotalValBtc.Location = new System.Drawing.Point(332, 559);
 			this._lblTotalValBtc.Name = "_lblTotalValBtc";
 			this._lblTotalValBtc.Size = new System.Drawing.Size(88, 13);
 			this._lblTotalValBtc.TabIndex = 11;
@@ -290,7 +297,7 @@
 			// 
 			this._lblTotalValBtcValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this._lblTotalValBtcValue.AutoSize = true;
-			this._lblTotalValBtcValue.Location = new System.Drawing.Point(428, 532);
+			this._lblTotalValBtcValue.Location = new System.Drawing.Point(426, 559);
 			this._lblTotalValBtcValue.Name = "_lblTotalValBtcValue";
 			this._lblTotalValBtcValue.Size = new System.Drawing.Size(110, 13);
 			this._lblTotalValBtcValue.TabIndex = 12;
@@ -301,7 +308,7 @@
 			this._cntnrGridData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this._cntnrGridData.Location = new System.Drawing.Point(12, 12);
+			this._cntnrGridData.Location = new System.Drawing.Point(12, 27);
 			this._cntnrGridData.Name = "_cntnrGridData";
 			this._cntnrGridData.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -315,15 +322,62 @@
 			this._cntnrGridData.Panel2.Controls.Add(this._gridHoldingsData);
 			this._cntnrGridData.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this._cntnrGridData.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this._cntnrGridData.Size = new System.Drawing.Size(1006, 517);
-			this._cntnrGridData.SplitterDistance = 258;
+			this._cntnrGridData.Size = new System.Drawing.Size(1006, 529);
+			this._cntnrGridData.SplitterDistance = 261;
 			this._cntnrGridData.TabIndex = 13;
+			// 
+			// _menuMain
+			// 
+			this._menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.currencyListToolStripMenuItem});
+			this._menuMain.Location = new System.Drawing.Point(0, 0);
+			this._menuMain.Name = "_menuMain";
+			this._menuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this._menuMain.Size = new System.Drawing.Size(1032, 24);
+			this._menuMain.TabIndex = 14;
+			this._menuMain.Text = "menuStrip1";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quitToolStripMenuItem});
+			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+			this.fileToolStripMenuItem.Text = "&File";
+			// 
+			// currencyListToolStripMenuItem
+			// 
+			this.currencyListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.holdingsToolStripMenuItem1,
+            this.marketToolStripMenuItem1});
+			this.currencyListToolStripMenuItem.Name = "currencyListToolStripMenuItem";
+			this.currencyListToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+			this.currencyListToolStripMenuItem.Text = "&Currency List";
+			// 
+			// holdingsToolStripMenuItem1
+			// 
+			this.holdingsToolStripMenuItem1.Name = "holdingsToolStripMenuItem1";
+			this.holdingsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+			this.holdingsToolStripMenuItem1.Text = "&Holdings";
+			// 
+			// marketToolStripMenuItem1
+			// 
+			this.marketToolStripMenuItem1.Name = "marketToolStripMenuItem1";
+			this.marketToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+			this.marketToolStripMenuItem1.Text = "&Market";
+			// 
+			// quitToolStripMenuItem
+			// 
+			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+			this.quitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.quitToolStripMenuItem.Text = "&Quit";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1032, 583);
+			this.ClientSize = new System.Drawing.Size(1032, 609);
 			this.Controls.Add(this._lblLastUpdated);
 			this.Controls.Add(this._lblTotalValBtcValue);
 			this.Controls.Add(this._lblTotalValBtc);
@@ -333,8 +387,10 @@
 			this.Controls.Add(this._cntnrGridData);
 			this.Controls.Add(this._btnPauseRefreshTimer);
 			this.Controls.Add(this._prgrssGlobalRefresh);
+			this.Controls.Add(this._menuMain);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(1040, 610);
+			this.MainMenuStrip = this._menuMain;
+			this.MinimumSize = new System.Drawing.Size(1040, 636);
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Crypto Currency Market Monitor";
@@ -347,6 +403,8 @@
 			this._cntnrGridData.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).EndInit();
 			this._cntnrGridData.ResumeLayout(false);
+			this._menuMain.ResumeLayout(false);
+			this._menuMain.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -379,6 +437,12 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsQuantity;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInUsd;
 		private System.Windows.Forms.DataGridViewTextBoxColumn _clmnHoldingsPriceInBtc;
+		private System.Windows.Forms.MenuStrip _menuMain;
+		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem currencyListToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem holdingsToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem marketToolStripMenuItem1;
 	}
 }
 
