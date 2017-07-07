@@ -3,6 +3,11 @@ using System.Windows.Forms;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 	internal class LayoutSettings {
+		public LayoutSettings() {
+			GridHoldingsColumns = new List<HoldingsDataGridViewColumnSettings>();
+			GridMarketColumns = new List<MarketDataGridViewColumnSettings>();
+		}
+
 		public int GridContainerSplitterPosition { get; set; }
 
 		public List<HoldingsDataGridViewColumnSettings> GridHoldingsColumns { get; set; }

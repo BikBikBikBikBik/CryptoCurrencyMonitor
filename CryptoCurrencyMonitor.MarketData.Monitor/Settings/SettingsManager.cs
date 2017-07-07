@@ -14,17 +14,15 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 
 		public CompleteSettings LoadCompleteSettings() {
 			if (!File.Exists(_settingsFileName)) {
-				return null;
+				return new CompleteSettings();
 			}
 
 			var settingsFileContents = File.ReadAllText(_settingsFileName, SETTINGS_FILE_ENCODING);
 			if (String.IsNullOrWhiteSpace(settingsFileContents)) {
-				return null;
+				return new CompleteSettings();
 			}
 
-			var completeSettings = JsonConvert.DeserializeObject<CompleteSettings>(settingsFileContents);
-
-			return completeSettings;
+			return JsonConvert.DeserializeObject<CompleteSettings>(settingsFileContents);
 		}
 
 		public void SaveCompleteSettings(CompleteSettings settings) {

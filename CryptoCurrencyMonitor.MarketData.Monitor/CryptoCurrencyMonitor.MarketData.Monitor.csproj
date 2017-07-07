@@ -72,6 +72,7 @@
     <Compile Include="Settings\DataGridViewCellSettings.cs" />
     <Compile Include="Settings\DataGridViewColumnSettings.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
+    <Compile Include="Settings\MonitoringSettings.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
     <EmbeddedResource Include="CurrencySelectionForm.resx">
       <DependentUpon>CurrencySelectionForm.cs</DependentUpon>

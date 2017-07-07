@@ -18,9 +18,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			InitializeComponent();
 
 			_coinMarketCapClient = new ApiClient(ConfigurationManager.AppSettings["COINMARKETCAP_API_BASE_ADDRESS"]);
-			_desiredHoldingsCurrencyTypes = ConfigurationManager.AppSettings["HOLDINGS_CURRENCY_LIST"].Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c.Trim())).ToList();
-			_desiredMarketCurrencyTypes = ConfigurationManager.AppSettings["CURRENCY_LIST"].Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c.Trim())).ToList();
 			_settingsManager = new SettingsManager(ConfigurationManager.AppSettings["SETTINGS_FILE_LOCATION"]);
+			_completeSettings = _settingsManager.LoadCompleteSettings();
 
 			_lblLastUpdatedValue.Text = String.Empty;
 			_lblTotalValBtcValue.Text = "0.00000000";
@@ -30,41 +29,62 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			SetMarketDataColumnTags();
 			SetHoldingsDataColumnType();
 			InitializeGlobalRefreshTimer();
-			InitializeHoldingsData();
 		}
 
-		private void ApplyMainFormSettings() {
-			var completeSettings = _settingsManager.LoadCompleteSettings();
+		private void ApplyCompleteSettings() {
+			ApplyHoldingsSettings(_completeSettings);
+			ApplyLayoutSettings(_completeSettings);
+		}
 
+		private void ApplyHoldingsSettings(CompleteSettings completeSettings) {
 			var holdings = completeSettings?.Holdings;
-			if (holdings != null) {
-				foreach (var row in holdings) {
-					var correspondingRow = _holdingsDataGridViewRows.SingleOrDefault(r => row.RowTag.Equals(r.Tag));
-					if (correspondingRow != null) {
-						correspondingRow.Cells[_clmnHoldingsQuantity.Index].Value = row.Value;
+			var monitoring = completeSettings?.Monitoring;
+
+			if (monitoring != null) {
+				_gridHoldingsData.Rows.Clear();
+
+				for (var i = 0; i < monitoring.HoldingsCurrencyTypes.Count; i++) {
+					var desiredCurrency = monitoring.HoldingsCurrencyTypes.ElementAt(i);
+					var newRow = new DataGridViewRow();
+					newRow.CreateCells(_gridHoldingsData);
+
+					var quantity = 0m;
+					var holding = holdings?.SingleOrDefault(h => h.RowTag == desiredCurrency);
+					if (holding != null) {
+						quantity = decimal.Parse(holding.Value);
 					}
+					newRow.SetValues(CurrencyTypeRegistry.GetNameAndSymbolFromId(desiredCurrency).Item1, quantity, "0.00", "0.00000000");
+
+					newRow.Tag = desiredCurrency;
+					_gridHoldingsData.Rows.Add(newRow);
 				}
 			}
+		}
 
+		private void ApplyLayoutSettings(CompleteSettings completeSettings) {
 			var layoutSettings = completeSettings?.Layout;
 			if (layoutSettings != null) {
 				Size = new Size(layoutSettings.Width, layoutSettings.Height);
 				Location = new Point(layoutSettings.LocationX, layoutSettings.LocationY);
 				_cntnrGridData.SplitterDistance = layoutSettings.GridContainerSplitterPosition;
 
-				foreach (var column in layoutSettings.GridHoldingsColumns) {
-					var correspondingColumn = _holdingsDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
-					if (correspondingColumn != null) {
-						correspondingColumn.FillWeight = column.FillWeight;
-						correspondingColumn.Width = column.Width;
+				if (layoutSettings.GridHoldingsColumns != null) {
+					foreach (var column in layoutSettings.GridHoldingsColumns) {
+						var correspondingColumn = _holdingsDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
+						if (correspondingColumn != null) {
+							correspondingColumn.FillWeight = column.FillWeight;
+							correspondingColumn.Width = column.Width;
+						}
 					}
 				}
 
-				foreach (var column in layoutSettings.GridMarketColumns) {
-					var correspondingColumn = _marketDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
-					if (correspondingColumn != null) {
-						correspondingColumn.FillWeight = column.FillWeight;
-						correspondingColumn.Width = column.Width;
+				if (layoutSettings.GridMarketColumns != null) {
+					foreach (var column in layoutSettings.GridMarketColumns) {
+						var correspondingColumn = _marketDataGridViewColumns.SingleOrDefault(c => column.Tag.Equals(c.Tag));
+						if (correspondingColumn != null) {
+							correspondingColumn.FillWeight = column.FillWeight;
+							correspondingColumn.Width = column.Width;
+						}
 					}
 				}
 
@@ -91,20 +111,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_globalRefreshTimer.Start();
 		}
 
-		private void InitializeHoldingsData() {
-			_gridHoldingsData.Rows.Clear();
-
-			for (var i = 0; i < _desiredHoldingsCurrencyTypes.Count; i++) {
-				var desiredCurrency = _desiredHoldingsCurrencyTypes.ElementAt(i);
-				var newRow = new DataGridViewRow();
-				newRow.CreateCells(_gridHoldingsData);
-				newRow.SetValues(CurrencyTypeRegistry.GetNameAndSymbolFromId(desiredCurrency).Item1, "0.0", "0.00", "0.00000000");
-				newRow.Tag = desiredCurrency;
-
-				_gridHoldingsData.Rows.Add(newRow);
-			}
-		}
-
 		#region Event Handlers
 		private void OnBtnPauseRefreshTimerClick(object sender, EventArgs e) {
 			if (_globalRefreshTimer.Enabled) {
@@ -117,12 +123,12 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void OnFormMainClosed(object sender, FormClosedEventArgs e) {
-			SaveMainFormSettings();
+			SaveCompleteSettings();
 		}
 
 		private async void OnFormMainLoad(object sender, EventArgs e) {
 			InitializeDataGridViewFields();
-			ApplyMainFormSettings();
+			ApplyCompleteSettings();
 			await RefreshAllData();
 		}
 
@@ -293,7 +299,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			var tickerData = await _coinMarketCapClient.GetTicker();
 
 			_gridMarketData.Rows.Clear();
-			foreach (var desiredCurrency in _desiredMarketCurrencyTypes) {
+			foreach (var desiredCurrency in _completeSettings.Monitoring.MarketCurrencyTypes) {
 				var currencyTicker = tickerData.SingleOrDefault(c => c.Id == desiredCurrency);
 
 				if (currencyTicker != null) {
@@ -307,19 +313,38 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
-		private void SaveMainFormSettings() {
-			var completeSettings = new CompleteSettings {
-				Holdings = new List<HoldingsDataGridViewCellSettings>(),
-				Layout = new LayoutSettings {
-					GridContainerSplitterPosition = _cntnrGridData.SplitterDistance,
-					GridHoldingsColumns = new List<HoldingsDataGridViewColumnSettings>(),
-					GridMarketColumns = new List<MarketDataGridViewColumnSettings>(),
-					Height = Size.Height,
-					LocationX = Location.X,
-					LocationY = Location.Y,
-					Width = Size.Width,
-					WindowState = WindowState
-				}
+		private void SaveCompleteSettings() {
+			var completeSettings = new CompleteSettings();
+
+			SaveHoldingsSettings(completeSettings);
+			SaveLayoutSettings(completeSettings);
+			SaveMonitoringSettings(completeSettings);
+
+			_settingsManager.SaveCompleteSettings(completeSettings);
+		}
+
+		private void SaveHoldingsSettings(CompleteSettings completeSettings) {
+			completeSettings.Holdings = new List<HoldingsDataGridViewCellSettings>();
+
+			foreach (var row in _holdingsDataGridViewRows) {
+				var settings = new HoldingsDataGridViewCellSettings {
+					RowTag = (int) row.Tag,
+					Value = row.Cells[_clmnHoldingsQuantity.Index].Value.ToString()
+				};
+				completeSettings.Holdings.Add(settings);
+			}
+		}
+
+		private void SaveLayoutSettings(CompleteSettings completeSettings) {
+			completeSettings.Layout = new LayoutSettings {
+				GridHoldingsColumns = new List<HoldingsDataGridViewColumnSettings>(),
+				GridMarketColumns = new List<MarketDataGridViewColumnSettings>(),
+				GridContainerSplitterPosition = _cntnrGridData.SplitterDistance,
+				Height = Size.Height,
+				LocationX = Location.X,
+				LocationY = Location.Y,
+				Width = Size.Width,
+				WindowState = WindowState
 			};
 
 			foreach (var column in _holdingsDataGridViewColumns) {
@@ -331,14 +356,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				completeSettings.Layout.GridHoldingsColumns.Add(settings);
 			}
 
-			foreach (var row in _holdingsDataGridViewRows) {
-				var settings = new HoldingsDataGridViewCellSettings {
-					RowTag = (int)row.Tag,
-					Value = row.Cells[_clmnHoldingsQuantity.Index].Value.ToString()
-				};
-				completeSettings.Holdings.Add(settings);
-			}
-
 			foreach (var column in _marketDataGridViewColumns) {
 				var settings = new MarketDataGridViewColumnSettings {
 					FillWeight = column.FillWeight,
@@ -347,8 +364,13 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				};
 				completeSettings.Layout.GridMarketColumns.Add(settings);
 			}
+		}
 
-			_settingsManager.SaveCompleteSettings(completeSettings);
+		private void SaveMonitoringSettings(CompleteSettings completeSettings) {
+			completeSettings.Monitoring = new MonitoringSettings {
+				HoldingsCurrencyTypes = _holdingsDataGridViewRows.Select(r => (int)r.Tag).ToList(),
+				MarketCurrencyTypes = _marketDataGridViewRows.Select(r => (int)r.Tag).ToList()
+			};
 		}
 
 		private void SetHoldingsDataColumnType() {
@@ -372,8 +394,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private readonly ApiClient _coinMarketCapClient;
-		private readonly ICollection<int> _desiredMarketCurrencyTypes;
-		private readonly ICollection<int> _desiredHoldingsCurrencyTypes;
+		private readonly CompleteSettings _completeSettings;
 		private Timer _globalRefreshTimer;
 		private IEnumerable<DataGridViewColumn> _holdingsDataGridViewColumns;
 		private IEnumerable<DataGridViewRow> _holdingsDataGridViewRows;
