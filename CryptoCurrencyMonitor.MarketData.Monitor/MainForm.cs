@@ -324,7 +324,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					var newRow = new DataGridViewRow();
 					newRow.CreateCells(_gridMarketData);
 					newRow.Tag = desiredCurrency;
-					newRow.SetValues(currencyTicker.Symbol, $"{currencyTicker.PriceInUsd:N6}", $"{currencyTicker.PriceInBtc:N8}", $"{currencyTicker.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(currencyTicker.PercentChange1H)}", $"{FormatPercentChange(currencyTicker.PercentChange24H)}", $"{FormatPercentChange(currencyTicker.PercentChange7D)}", $"{currencyTicker.VolumeInUsd24H:N}", $"{currencyTicker.MarketCapInUsd:N}", currencyTicker.Rank);
+					newRow.SetValues(currencyTicker.Symbol, $"{currencyTicker.PriceInUsd:0.######}", $"{currencyTicker.PriceInBtc:0.#########}", $"{currencyTicker.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(currencyTicker.PercentChange1H)}", $"{FormatPercentChange(currencyTicker.PercentChange24H)}", $"{FormatPercentChange(currencyTicker.PercentChange7D)}", $"{currencyTicker.VolumeInUsd24H:N}", $"{currencyTicker.MarketCapInUsd:N}", currencyTicker.Rank);
 
 					_gridMarketData.Rows.Add(newRow);
 				}
