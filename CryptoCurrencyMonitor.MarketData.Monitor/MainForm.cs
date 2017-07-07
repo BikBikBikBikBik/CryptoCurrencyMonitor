@@ -67,7 +67,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			if (layoutSettings != null) {
 				Size = new Size(layoutSettings.Width, layoutSettings.Height);
 				Location = new Point(layoutSettings.LocationX, layoutSettings.LocationY);
-				_cntnrGridData.SplitterDistance = layoutSettings.GridContainerSplitterPosition;
+				_cntnrGridData.SplitterDistance = layoutSettings.GridContainerSplitterPosition > 0 ? layoutSettings.GridContainerSplitterPosition : _cntnrGridData.SplitterDistance;
 
 				if (layoutSettings.GridHoldingsColumns != null) {
 					foreach (var column in layoutSettings.GridHoldingsColumns) {
