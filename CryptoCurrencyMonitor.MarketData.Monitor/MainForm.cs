@@ -13,7 +13,7 @@ using LayoutSettings = CryptoCurrencyMonitor.MarketData.Monitor.Settings.LayoutS
 using Timer = System.Timers.Timer;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor {
-	public partial class MainForm : Form {
+	internal partial class MainForm : Form {
 		public MainForm() {
 			InitializeComponent();
 
@@ -264,6 +264,12 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void OnMenuItemFileSettingsClick(object sender, EventArgs e) {
+			using (var settingsForm = new SettingsForm(_completeSettings)) {
+				if (settingsForm.ShowDialog(this) == DialogResult.OK) {
+					_completeSettings.Monitoring.RefreshInterval = settingsForm.RefreshInterval;
+					ApplyMonitoringSettings(_completeSettings.Monitoring);
+				}
+			}
 		}
 
 		private void OnNtfyMainMouseDoubleClick(object sender, MouseEventArgs e) {

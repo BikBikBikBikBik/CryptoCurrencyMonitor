@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using CryptoCurrencyMonitor.MarketData.Client;
 
 namespace CryptoCurrencyMonitor.MarketData.Monitor {
-	public partial class CurrencySelectionForm : Form {
+	internal partial class CurrencySelectionForm : Form {
 		public CurrencySelectionForm(ICollection<int> selectedCurrencyTypes) {
 			InitializeComponent();
 
