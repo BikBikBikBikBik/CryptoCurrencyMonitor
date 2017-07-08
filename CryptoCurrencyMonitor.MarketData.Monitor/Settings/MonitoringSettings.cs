@@ -10,5 +10,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor.Settings {
 		public List<int> HoldingsCurrencyTypes { get; set; }
 
 		public List<int> MarketCurrencyTypes { get; set; }
+
+		public int RefreshInterval { get; set; }
 	}
 }

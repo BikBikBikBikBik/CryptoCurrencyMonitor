@@ -55,6 +55,8 @@
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
 			this._menuMain = new System.Windows.Forms.MenuStrip();
 			this._menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemFileSettings = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuSepFileSettings = new System.Windows.Forms.ToolStripSeparator();
 			this._menuItemFileQuit = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuItemCurrencyList = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuItemCurrencyListHoldings = new System.Windows.Forms.ToolStripMenuItem();
@@ -341,10 +343,24 @@
 			// _menuItemFile
 			// 
 			this._menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuItemFileSettings,
+            this._menuSepFileSettings,
             this._menuItemFileQuit});
 			this._menuItemFile.Name = "_menuItemFile";
 			this._menuItemFile.Size = new System.Drawing.Size(35, 20);
 			this._menuItemFile.Text = "&File";
+			// 
+			// _menuItemFileSettings
+			// 
+			this._menuItemFileSettings.Name = "_menuItemFileSettings";
+			this._menuItemFileSettings.Size = new System.Drawing.Size(152, 22);
+			this._menuItemFileSettings.Text = "&Settings";
+			this._menuItemFileSettings.Click += new System.EventHandler(this.OnMenuItemFileSettingsClick);
+			// 
+			// _menuSepFileSettings
+			// 
+			this._menuSepFileSettings.Name = "_menuSepFileSettings";
+			this._menuSepFileSettings.Size = new System.Drawing.Size(149, 6);
 			// 
 			// _menuItemFileQuit
 			// 
@@ -365,14 +381,14 @@
 			// _menuItemCurrencyListHoldings
 			// 
 			this._menuItemCurrencyListHoldings.Name = "_menuItemCurrencyListHoldings";
-			this._menuItemCurrencyListHoldings.Size = new System.Drawing.Size(152, 22);
+			this._menuItemCurrencyListHoldings.Size = new System.Drawing.Size(114, 22);
 			this._menuItemCurrencyListHoldings.Text = "&Holdings";
 			this._menuItemCurrencyListHoldings.Click += new System.EventHandler(this.OnMenuItemCurrencyListHoldingsClick);
 			// 
 			// _menuItemCurrencyListMarket
 			// 
 			this._menuItemCurrencyListMarket.Name = "_menuItemCurrencyListMarket";
-			this._menuItemCurrencyListMarket.Size = new System.Drawing.Size(152, 22);
+			this._menuItemCurrencyListMarket.Size = new System.Drawing.Size(114, 22);
 			this._menuItemCurrencyListMarket.Text = "&Market";
 			this._menuItemCurrencyListMarket.Click += new System.EventHandler(this.OnMenuItemCurrencyListMarketClick);
 			// 
@@ -446,6 +462,8 @@
 		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyList;
 		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyListHoldings;
 		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyListMarket;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemFileSettings;
+		private System.Windows.Forms.ToolStripSeparator _menuSepFileSettings;
 	}
 }
 

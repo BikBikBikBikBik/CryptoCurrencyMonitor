@@ -34,7 +34,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void ApplyCompleteSettings() {
 			ApplyHoldingsSettings(_completeSettings);
-			ApplyLayoutSettings(_completeSettings);
+			ApplyLayoutSettings(_completeSettings.Layout);
+			ApplyMonitoringSettings(_completeSettings.Monitoring);
 		}
 
 		private void ApplyHoldingsSettings(CompleteSettings completeSettings) {
@@ -62,8 +63,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
-		private void ApplyLayoutSettings(CompleteSettings completeSettings) {
-			var layoutSettings = completeSettings?.Layout;
+		private void ApplyLayoutSettings(LayoutSettings layoutSettings) {
 			if (layoutSettings != null) {
 				Size = new Size(layoutSettings.Width, layoutSettings.Height);
 				Location = new Point(layoutSettings.LocationX, layoutSettings.LocationY);
@@ -93,6 +93,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
+		private void ApplyMonitoringSettings(MonitoringSettings monitoringSettings) {
+			_prgrssGlobalRefresh.Maximum = monitoringSettings.RefreshInterval > 0 ? monitoringSettings.RefreshInterval : DEFAULT_REFRESH_INTERVAL;
+		}
+
 		private String FormatPercentChange(decimal percentChange) {
 			//Use Math.abs() to avoid showing the 'built in' minus sign for negative numbers
 			return $"{(percentChange == 0 ? " " : (percentChange > 0 ? "+" : "-"))} {Math.Abs(percentChange)}";
@@ -105,8 +109,9 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_marketDataGridViewRows = _marketDataGridViewRows != null ? (_marketDataGridViewRows.Any() ? _marketDataGridViewRows : _gridMarketData.Rows.Cast<DataGridViewRow>()) : _gridMarketData.Rows.Cast<DataGridViewRow>();
 		}
 
+		
 		private void InitializeGlobalRefreshTimer() {
-			_globalRefreshTimer = new Timer(double.Parse(ConfigurationManager.AppSettings["REFRESH_INTERVAL"]) / 100d);
+			_globalRefreshTimer = new Timer(1000);
 			_globalRefreshTimer.Elapsed += OnGlobalRefreshTimerElapsed;
 			_globalRefreshTimer.SynchronizingObject = this;
 			_globalRefreshTimer.Start();
@@ -258,6 +263,9 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			Application.Exit();
 		}
 
+		private void OnMenuItemFileSettingsClick(object sender, EventArgs e) {
+		}
+
 		private void OnNtfyMainMouseDoubleClick(object sender, MouseEventArgs e) {
 			if (WindowState == FormWindowState.Minimized) {
 				Show();
@@ -389,7 +397,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void SaveMonitoringSettings(CompleteSettings completeSettings) {
 			completeSettings.Monitoring = new MonitoringSettings {
 				HoldingsCurrencyTypes = _holdingsDataGridViewRows.Select(r => (int)r.Tag).ToList(),
-				MarketCurrencyTypes = _marketDataGridViewRows.Select(r => (int)r.Tag).ToList()
+				MarketCurrencyTypes = _marketDataGridViewRows.Select(r => (int)r.Tag).ToList(),
+				RefreshInterval = _prgrssGlobalRefresh.Maximum
 			};
 		}
 
@@ -413,6 +422,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_clmnMarketVolumeUsd24h.Tag = MarketDataColumnType.VolumeInUsd24H;
 		}
 
+		private const int DEFAULT_REFRESH_INTERVAL = 120;
 		private readonly ApiClient _coinMarketCapClient;
 		private readonly CompleteSettings _completeSettings;
 		private Timer _globalRefreshTimer;
