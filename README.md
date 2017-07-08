@@ -11,8 +11,7 @@ IN PROGRESS
 <br />
 # Coming Soon
 1. Notifications (desktop and/or email and/or SMS)
-2. Add/remove currencies and modify other settings without having to manually edit config file
-3. Tests
+2. Tests
 <br />
 <br />
 There are no current plans to make this available on platforms other than Windows. If you're interested in a Mac/Linux port (or some other feature) please open an issue.
