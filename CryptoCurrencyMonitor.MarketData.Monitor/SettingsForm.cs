@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using CryptoCurrencyMonitor.MarketData.Monitor.Settings;
 
@@ -8,16 +10,30 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		public SettingsForm(CompleteSettings completeSettings) {
 			InitializeComponent();
 
-			_completeSettings = completeSettings;
-
-			InitializeSettings();
+			InitCurrencyDisplayTypeRadioMap();
+			InitializeSettings(completeSettings);
 		}
+
+		public CurrencyDisplayType CurrencyDisplayType => _currencyDisplayTypeRadioMap.SingleOrDefault(kv => kv.Value.Checked).Key;
 
 		public int RefreshInterval { get; private set; }
 
-		private void InitializeSettings() {
-			RefreshInterval = _completeSettings.Monitoring.RefreshInterval;
-			_txtRefreshInterval.Text = _completeSettings.Monitoring.RefreshInterval.ToString();
+		private void InitializeSettings(CompleteSettings completeSettings) {
+			//Refresh Interval
+			RefreshInterval = completeSettings.Monitoring.RefreshInterval;
+			_txtRefreshInterval.Text = completeSettings.Monitoring.RefreshInterval.ToString();
+
+			//Currency Display
+			_currencyDisplayTypeRadioMap[completeSettings.Monitoring.CurrencyDisplayType].Checked = true;
+		}
+
+		private void InitCurrencyDisplayTypeRadioMap() {
+			_currencyDisplayTypeRadioMap = new Dictionary<CurrencyDisplayType, RadioButton> {
+				{ CurrencyDisplayType.Name, _radioName },
+				{ CurrencyDisplayType.NameAndSymbol, _radioNameAndSymbol },
+				{ CurrencyDisplayType.Symbol, _radioSymbol },
+				{ CurrencyDisplayType.SymbolAndName, _radioSymbolAndName }
+			};
 		}
 
 		#region Event Handlers
@@ -39,6 +55,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 		#endregion
 
-		private readonly CompleteSettings _completeSettings;
+		private IDictionary<CurrencyDisplayType, RadioButton> _currencyDisplayTypeRadioMap;
 	}
 }

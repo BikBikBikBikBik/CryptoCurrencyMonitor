@@ -55,7 +55,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					if (holding != null) {
 						quantity = decimal.Parse(holding.Value);
 					}
-					newRow.SetValues(CurrencyTypeRegistry.GetNameAndSymbolFromId(desiredCurrency).Item1, quantity, "0.00", "0.00000000");
+					newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency, monitoring.CurrencyDisplayType), quantity, "0.00", "0.00000000");
 
 					newRow.Tag = desiredCurrency;
 					_gridHoldingsData.Rows.Add(newRow);
@@ -99,12 +99,32 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				var newRow = new DataGridViewRow();
 				newRow.CreateCells(_gridMarketData);
 				newRow.Tag = desiredCurrency;
-				newRow.SetValues(CurrencyTypeRegistry.GetNameAndSymbolFromId(desiredCurrency).Item1, "0.00", 0, 0, 0, 0, 0, "0.00", "0.00", 0);
+				newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency, monitoringSettings.CurrencyDisplayType), "0.00", 0, 0, 0, 0, 0, "0.00", "0.00", 0);
 
 				_gridMarketData.Rows.Add(newRow);
 			}
 
 			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
+		}
+
+		private String FormatCurrencyForDisplay(int currencyId, CurrencyDisplayType displayType) {
+			var currency = CurrencyTypeRegistry.GetNameAndSymbolFromId(currencyId);
+
+			switch (displayType) {
+				case CurrencyDisplayType.Name:
+					return currency.Item2;
+				
+				case CurrencyDisplayType.NameAndSymbol:
+					return $"{currency.Item2} ({currency.Item1})";
+				
+				case CurrencyDisplayType.Symbol:
+					return currency.Item1;
+				
+				case CurrencyDisplayType.SymbolAndName:
+					return $"{currency.Item1} ({currency.Item2})";
+			}
+
+			return String.Empty;
 		}
 
 		private String FormatPercentChange(decimal percentChange) {
@@ -277,7 +297,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void OnMenuItemFileSettingsClick(object sender, EventArgs e) {
 			using (var settingsForm = new SettingsForm(_completeSettings)) {
 				if (settingsForm.ShowDialog(this) == DialogResult.OK) {
+					_completeSettings.Monitoring.CurrencyDisplayType = settingsForm.CurrencyDisplayType;
 					_completeSettings.Monitoring.RefreshInterval = settingsForm.RefreshInterval;
+
+					UpdateCurrencyDisplayType(_completeSettings.Monitoring.CurrencyDisplayType);
 					UpdateRefreshInterval(_completeSettings.Monitoring.RefreshInterval);
 				}
 			}
@@ -344,7 +367,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			foreach (var row in _marketDataGridViewRows) {
 				var desiredCurrency = tickerData.SingleOrDefault(c => c.Id == (int)row.Tag);
 				if (desiredCurrency != null) {
-					row.SetValues(desiredCurrency.Symbol, $"{desiredCurrency.PriceInUsd:0.00####}", $"{desiredCurrency.PriceInBtc:0.#########}", $"{desiredCurrency.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(desiredCurrency.PercentChange1H)}", $"{FormatPercentChange(desiredCurrency.PercentChange24H)}", $"{FormatPercentChange(desiredCurrency.PercentChange7D)}", $"{desiredCurrency.VolumeInUsd24H:N}", $"{desiredCurrency.MarketCapInUsd:N}", desiredCurrency.Rank);
+					row.SetValues(row.Cells[0].Value, $"{desiredCurrency.PriceInUsd:0.00####}", $"{desiredCurrency.PriceInBtc:0.#########}", $"{desiredCurrency.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(desiredCurrency.PercentChange1H)}", $"{FormatPercentChange(desiredCurrency.PercentChange24H)}", $"{FormatPercentChange(desiredCurrency.PercentChange7D)}", $"{desiredCurrency.VolumeInUsd24H:N}", $"{desiredCurrency.MarketCapInUsd:N}", desiredCurrency.Rank);
 				}
 			}
 
@@ -406,6 +429,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void SaveMonitoringSettings(CompleteSettings completeSettings) {
 			completeSettings.Monitoring = new MonitoringSettings {
+				CurrencyDisplayType = _completeSettings.Monitoring.CurrencyDisplayType,
 				HoldingsCurrencyTypes = _holdingsDataGridViewRows.Select(r => (int)r.Tag).ToList(),
 				MarketCurrencyTypes = _marketDataGridViewRows.Select(r => (int)r.Tag).ToList(),
 				RefreshInterval = _prgrssGlobalRefresh.Maximum
@@ -430,6 +454,16 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_clmnMarketRank.Tag = MarketDataColumnType.Rank;
 			_clmnMarketSatoshi.Tag = MarketDataColumnType.Satoshi;
 			_clmnMarketVolumeUsd24h.Tag = MarketDataColumnType.VolumeInUsd24H;
+		}
+
+		private void UpdateCurrencyDisplayType(CurrencyDisplayType displayType) {
+			foreach (var row in _holdingsDataGridViewRows) {
+				row.Cells[0].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
+			}
+
+			foreach (var row in _marketDataGridViewRows) {
+				row.Cells[0].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
+			}
 		}
 
 		private void UpdateRefreshInterval(int refreshInterval) {
