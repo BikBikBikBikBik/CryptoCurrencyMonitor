@@ -3,10 +3,16 @@ Monitor market data and value of all of your crypto holdings updated as often as
 <br />
 <br />
 # Usage
-### Selecting Currencies
-From the *Currency List* menu select either *Holdings* or *Market*. *Market* will allow you to select the currencies whose market data will be shown, while *Holdings* will allow you to select the currencies you hold. In the screen below the top section is the *Market* data while the bottom section is the *Holdings* data:
+In the screen below the top section is the *Market* data while the bottom section is the *Holdings* data:
 
 ![Screenshot](https://s10.postimg.org/pgg6lg43d/ccmm_01.png)
+
+### Selecting Currencies
+From the *Currency List* menu select either *Holdings* or *Market* to choose currencies for the respective watch list:
+
+![Screenshot](https://s13.postimg.org/97ayteu2f/ccmm_win_select_currencies.png)
+
+Select currencies from the left side and click *Add Selected* to add to your watch list. Select currencies from the right side and click *Remove Selected* to remove from your watch list. Click *Ok* to save your changes or *Cancel* to forget your changes.
 
 ### Changing the Refresh Interval
 From the *File* menu select *Settings*. The refresh interval is the number of seconds to wait until fetching the latest market data:
