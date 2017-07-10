@@ -94,7 +94,17 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void ApplyMonitoringSettings(MonitoringSettings monitoringSettings) {
-			_prgrssGlobalRefresh.Maximum = monitoringSettings.RefreshInterval > 0 ? monitoringSettings.RefreshInterval : DEFAULT_REFRESH_INTERVAL;
+			_gridMarketData.Rows.Clear();
+			foreach (var desiredCurrency in monitoringSettings.MarketCurrencyTypes) {
+				var newRow = new DataGridViewRow();
+				newRow.CreateCells(_gridMarketData);
+				newRow.Tag = desiredCurrency;
+				newRow.SetValues(CurrencyTypeRegistry.GetNameAndSymbolFromId(desiredCurrency).Item1, "0.00", 0, 0, 0, 0, 0, "0.00", "0.00", 0);
+
+				_gridMarketData.Rows.Add(newRow);
+			}
+
+			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
 		}
 
 		private String FormatPercentChange(decimal percentChange) {
@@ -254,6 +264,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.MarketCurrencyTypes)) {
 				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
 					_completeSettings.Monitoring.MarketCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
+					ApplyMonitoringSettings(_completeSettings.Monitoring);
 					await RefreshAllData();
 				}
 			}
@@ -267,7 +278,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			using (var settingsForm = new SettingsForm(_completeSettings)) {
 				if (settingsForm.ShowDialog(this) == DialogResult.OK) {
 					_completeSettings.Monitoring.RefreshInterval = settingsForm.RefreshInterval;
-					ApplyMonitoringSettings(_completeSettings.Monitoring);
+					UpdateRefreshInterval(_completeSettings.Monitoring.RefreshInterval);
 				}
 			}
 		}
@@ -290,7 +301,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_ntfyMain.Text = "Updating...";
 
 			try {
-				_tickerData = await RefreshMarketData(_completeSettings.Monitoring);
+				_tickerData = await RefreshMarketData();
 				RefreshHoldingsData(_tickerData);
 			} catch (Exception e) {
 				//TODO: Coming soon...
@@ -327,20 +338,13 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
 		}
 
-		private async Task<ICollection<CurrencyTicker>> RefreshMarketData(MonitoringSettings monitoringSettings) {
+		private async Task<ICollection<CurrencyTicker>> RefreshMarketData() {
 			var tickerData = await _coinMarketCapClient.GetTicker();
 
-			_gridMarketData.Rows.Clear();
-			foreach (var desiredCurrency in monitoringSettings.MarketCurrencyTypes) {
-				var currencyTicker = tickerData.SingleOrDefault(c => c.Id == desiredCurrency);
-
-				if (currencyTicker != null) {
-					var newRow = new DataGridViewRow();
-					newRow.CreateCells(_gridMarketData);
-					newRow.Tag = desiredCurrency;
-					newRow.SetValues(currencyTicker.Symbol, $"{currencyTicker.PriceInUsd:0.00####}", $"{currencyTicker.PriceInBtc:0.#########}", $"{currencyTicker.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(currencyTicker.PercentChange1H)}", $"{FormatPercentChange(currencyTicker.PercentChange24H)}", $"{FormatPercentChange(currencyTicker.PercentChange7D)}", $"{currencyTicker.VolumeInUsd24H:N}", $"{currencyTicker.MarketCapInUsd:N}", currencyTicker.Rank);
-
-					_gridMarketData.Rows.Add(newRow);
+			foreach (var row in _marketDataGridViewRows) {
+				var desiredCurrency = tickerData.SingleOrDefault(c => c.Id == (int)row.Tag);
+				if (desiredCurrency != null) {
+					row.SetValues(desiredCurrency.Symbol, $"{desiredCurrency.PriceInUsd:0.00####}", $"{desiredCurrency.PriceInBtc:0.#########}", $"{desiredCurrency.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(desiredCurrency.PercentChange1H)}", $"{FormatPercentChange(desiredCurrency.PercentChange24H)}", $"{FormatPercentChange(desiredCurrency.PercentChange7D)}", $"{desiredCurrency.VolumeInUsd24H:N}", $"{desiredCurrency.MarketCapInUsd:N}", desiredCurrency.Rank);
 				}
 			}
 
@@ -426,6 +430,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_clmnMarketRank.Tag = MarketDataColumnType.Rank;
 			_clmnMarketSatoshi.Tag = MarketDataColumnType.Satoshi;
 			_clmnMarketVolumeUsd24h.Tag = MarketDataColumnType.VolumeInUsd24H;
+		}
+
+		private void UpdateRefreshInterval(int refreshInterval) {
+			_prgrssGlobalRefresh.Maximum = refreshInterval > 0 ? refreshInterval : DEFAULT_REFRESH_INTERVAL;
 		}
 
 		private const int DEFAULT_REFRESH_INTERVAL = 120;
