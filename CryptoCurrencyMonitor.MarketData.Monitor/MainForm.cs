@@ -22,7 +22,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_completeSettings = _settingsManager.LoadCompleteSettings();
 
 			_lblLastUpdatedValue.Text = String.Empty;
-			_lblTotalValBtcValue.Text = "0.00000000";
+			_lblTotalValBtcValue.Text = "0";
 			_lblTotalValUsdValue.Text = "0.00";
 			_ntfyMain.Text = String.Empty;
 			_tickerData = new List<CurrencyTicker>();
@@ -55,7 +55,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					if (holding != null) {
 						quantity = decimal.Parse(holding.Value);
 					}
-					newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency, monitoring.CurrencyDisplayType), quantity, "0.00", "0.00000000");
+					newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency, monitoring.CurrencyDisplayType), quantity, "0.00", 0);
 
 					newRow.Tag = desiredCurrency;
 					_gridHoldingsData.Rows.Add(newRow);
@@ -353,11 +353,11 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					overallPriceInUsd += totalPriceInUsd;
 
 					row.Cells[_clmnHoldingsPriceInUsd.Index].Value = $"{totalPriceInUsd:N}";
-					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:N8}";
+					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:0.#########}";
 				}
 			}
 
-			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:N8}";
+			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:0.#########}";
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
 		}
 
