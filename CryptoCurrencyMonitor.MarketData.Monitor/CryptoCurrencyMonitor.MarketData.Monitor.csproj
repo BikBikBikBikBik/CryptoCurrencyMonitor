@@ -75,6 +75,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\CompleteSettings.cs" />
+    <Compile Include="Settings\CurrencyDisplayType.cs" />
     <Compile Include="Settings\DataGridViewCellSettings.cs" />
     <Compile Include="Settings\DataGridViewColumnSettings.cs" />
     <Compile Include="Settings\LayoutSettings.cs" />
