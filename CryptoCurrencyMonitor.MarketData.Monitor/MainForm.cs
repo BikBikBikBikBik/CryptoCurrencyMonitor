@@ -33,34 +33,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void ApplyCompleteSettings() {
-			ApplyHoldingsSettings(_completeSettings);
 			ApplyLayoutSettings(_completeSettings.Layout);
 			ApplyMonitoringSettings(_completeSettings.Monitoring);
-		}
-
-		private void ApplyHoldingsSettings(CompleteSettings completeSettings) {
-			var holdings = completeSettings?.Holdings;
-			var monitoring = completeSettings?.Monitoring;
-
-			if (monitoring != null) {
-				_gridHoldingsData.Rows.Clear();
-
-				for (var i = 0; i < monitoring.HoldingsCurrencyTypes.Count; i++) {
-					var desiredCurrency = monitoring.HoldingsCurrencyTypes.ElementAt(i);
-					var newRow = new DataGridViewRow();
-					newRow.CreateCells(_gridHoldingsData);
-
-					var quantity = 0m;
-					var holding = holdings?.SingleOrDefault(h => h.RowTag == desiredCurrency);
-					if (holding != null) {
-						quantity = decimal.Parse(holding.Value);
-					}
-					newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency, monitoring.CurrencyDisplayType), quantity, "0.00", 0);
-
-					newRow.Tag = desiredCurrency;
-					_gridHoldingsData.Rows.Add(newRow);
-				}
-			}
 		}
 
 		private void ApplyLayoutSettings(LayoutSettings layoutSettings) {
@@ -94,6 +68,24 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void ApplyMonitoringSettings(MonitoringSettings monitoringSettings) {
+			ApplyMonitoringMarketSettings(monitoringSettings);
+			ApplyMonitoringHoldingsSettings(monitoringSettings);
+			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
+		}
+
+		private void ApplyMonitoringHoldingsSettings(MonitoringSettings monitoringSettings) {
+			_gridHoldingsData.Rows.Clear();
+			foreach (var desiredCurrency in monitoringSettings.Holdings) {
+				var newRow = new DataGridViewRow();
+				newRow.CreateCells(_gridHoldingsData);
+				newRow.SetValues(FormatCurrencyForDisplay(desiredCurrency.RowTag, monitoringSettings.CurrencyDisplayType), decimal.Parse(desiredCurrency.Value), "0.00", 0);
+				newRow.Tag = desiredCurrency.RowTag;
+
+				_gridHoldingsData.Rows.Add(newRow);
+			}
+		}
+
+		private void ApplyMonitoringMarketSettings(MonitoringSettings monitoringSettings) {
 			_gridMarketData.Rows.Clear();
 			foreach (var desiredCurrency in monitoringSettings.MarketCurrencyTypes) {
 				var newRow = new DataGridViewRow();
@@ -103,8 +95,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 				_gridMarketData.Rows.Add(newRow);
 			}
-
-			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
 		}
 
 		private String FormatCurrencyForDisplay(int currencyId, CurrencyDisplayType displayType) {
@@ -270,11 +260,15 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void OnMenuItemCurrencyListHoldingsClick(object sender, EventArgs e) {
-			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.HoldingsCurrencyTypes)) {
+			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.Holdings.Select(h => h.RowTag).ToList())) {
 				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
-					_completeSettings.Monitoring.HoldingsCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
-					SaveHoldingsSettings(_completeSettings);
-					ApplyHoldingsSettings(_completeSettings);
+					_completeSettings.Monitoring.Holdings = currencySelectionForm.SelectedCurrencyIds.Select(c => {
+						var quantityString = _holdingsDataGridViewRows.SingleOrDefault(r => (int)r.Tag == c)?.Cells[_clmnHoldingsQuantity.Index].Value.ToString();
+
+						return new HoldingsDataGridViewCellSettings { RowTag = c, Value = String.IsNullOrWhiteSpace(quantityString) ? "0" : quantityString};
+					}).ToList();
+
+					ApplyMonitoringHoldingsSettings(_completeSettings.Monitoring);
 					RefreshHoldingsData(_tickerData);
 				}
 			}
@@ -284,6 +278,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.MarketCurrencyTypes)) {
 				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
 					_completeSettings.Monitoring.MarketCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
+
 					ApplyMonitoringSettings(_completeSettings.Monitoring);
 					await RefreshAllData();
 				}
@@ -377,23 +372,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void SaveCompleteSettings() {
 			var completeSettings = new CompleteSettings();
 
-			SaveHoldingsSettings(completeSettings);
 			SaveLayoutSettings(completeSettings);
 			SaveMonitoringSettings(completeSettings);
 
 			_settingsManager.SaveCompleteSettings(completeSettings);
-		}
-
-		private void SaveHoldingsSettings(CompleteSettings completeSettings) {
-			completeSettings.Holdings = new List<HoldingsDataGridViewCellSettings>();
-
-			foreach (var row in _holdingsDataGridViewRows) {
-				var settings = new HoldingsDataGridViewCellSettings {
-					RowTag = (int) row.Tag,
-					Value = row.Cells[_clmnHoldingsQuantity.Index].Value.ToString()
-				};
-				completeSettings.Holdings.Add(settings);
-			}
 		}
 
 		private void SaveLayoutSettings(CompleteSettings completeSettings) {
@@ -430,7 +412,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void SaveMonitoringSettings(CompleteSettings completeSettings) {
 			completeSettings.Monitoring = new MonitoringSettings {
 				CurrencyDisplayType = _completeSettings.Monitoring.CurrencyDisplayType,
-				HoldingsCurrencyTypes = _holdingsDataGridViewRows.Select(r => (int)r.Tag).ToList(),
+				Holdings = _holdingsDataGridViewRows.Select(r => new HoldingsDataGridViewCellSettings { RowTag = (int)r.Tag, Value = r.Cells[_clmnHoldingsQuantity.Index].Value.ToString() } ).ToList(),
 				MarketCurrencyTypes = _marketDataGridViewRows.Select(r => (int)r.Tag).ToList(),
 				RefreshInterval = _prgrssGlobalRefresh.Maximum
 			};
@@ -458,11 +440,11 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void UpdateCurrencyDisplayType(CurrencyDisplayType displayType) {
 			foreach (var row in _holdingsDataGridViewRows) {
-				row.Cells[0].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
+				row.Cells[_clmnHoldingsCoin.Index].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
 			}
 
 			foreach (var row in _marketDataGridViewRows) {
-				row.Cells[0].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
+				row.Cells[_clmnMarketCoin.Index].Value = FormatCurrencyForDisplay((int)row.Tag, displayType);
 			}
 		}
 
