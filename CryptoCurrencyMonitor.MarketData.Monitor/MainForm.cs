@@ -24,6 +24,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblLastUpdatedValue.Text = String.Empty;
 			_lblTotalValBtcValue.Text = "0";
 			_lblTotalValUsdValue.Text = "0.00";
+			_ntfyMain.ContextMenu = new ContextMenu(new []{ new MenuItem("E&xit", (s, a) => Application.Exit()) });
 			_ntfyMain.Text = String.Empty;
 			_tickerData = new List<CurrencyTicker>();
 			
