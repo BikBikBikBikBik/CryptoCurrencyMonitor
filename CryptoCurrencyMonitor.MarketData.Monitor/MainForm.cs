@@ -67,12 +67,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
-		private void ApplyMonitoringSettings(MonitoringSettings monitoringSettings) {
-			ApplyMonitoringMarketSettings(monitoringSettings);
-			ApplyMonitoringHoldingsSettings(monitoringSettings);
-			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
-		}
-
 		private void ApplyMonitoringHoldingsSettings(MonitoringSettings monitoringSettings) {
 			_gridHoldingsData.Rows.Clear();
 			foreach (var desiredCurrency in monitoringSettings.Holdings) {
@@ -95,6 +89,12 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 				_gridMarketData.Rows.Add(newRow);
 			}
+		}
+
+		private void ApplyMonitoringSettings(MonitoringSettings monitoringSettings) {
+			ApplyMonitoringMarketSettings(monitoringSettings);
+			ApplyMonitoringHoldingsSettings(monitoringSettings);
+			UpdateRefreshInterval(monitoringSettings.RefreshInterval);
 		}
 
 		private String FormatCurrencyForDisplay(int currencyId, CurrencyDisplayType displayType) {
