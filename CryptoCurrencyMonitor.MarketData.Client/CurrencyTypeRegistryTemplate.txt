@@ -1082,6 +1082,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ 307131701, new Tuple<String, String>("ZNY", "Bitzeny") },
 			{ 1575542954, new Tuple<String, String>("ZOI", "Zoin") },
 			{ 669331211, new Tuple<String, String>("ZRC", "ZrCoin") },
+			{ 495948806, new Tuple<String, String>("ZRX", "0x") },
 			{ 2008838247, new Tuple<String, String>("ZSE", "ZSEcoin") },
 			{ -113697064, new Tuple<String, String>("ZUR", "Zurcoin") },
 			{ -1513310241, new Tuple<String, String>("ZYD", "Zayedcoin") },
