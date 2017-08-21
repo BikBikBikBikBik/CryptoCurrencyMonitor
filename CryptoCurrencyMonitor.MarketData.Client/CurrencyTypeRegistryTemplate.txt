@@ -481,6 +481,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ 1698864569, new Tuple<String, String>("HODL", "HOdlcoin") },
 			{ -1797015076, new Tuple<String, String>("HONEY", "Honey") },
 			{ 112120167, new Tuple<String, String>("HPC", "Happycoin") },
+			{ -762527112, new Tuple<String, String>("HSR", "Hshare") },
 			{ -926695002, new Tuple<String, String>("HTC", "HitCoin") },
 			{ 737246128, new Tuple<String, String>("HTML5", "HTMLCOIN") },
 			{ 995641247, new Tuple<String, String>("HUC", "HunterCoin") },
