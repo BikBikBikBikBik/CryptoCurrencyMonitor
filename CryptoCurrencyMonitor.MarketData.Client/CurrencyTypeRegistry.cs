@@ -587,6 +587,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client {
 			{ -425066166, new Tuple<String, String>("LIR", "LetItRide") },
 			{ 1561385856, new Tuple<String, String>("LKC", "LinkedCoin") },
 			{ -1320213327, new Tuple<String, String>("LKK", "Lykke") },
+			{ -1673013097, new Tuple<String, String>("LLT", "LLToken") },
 			{ -250709268, new Tuple<String, String>("LMC", "LoMoCoin") },
 			{ 264661688, new Tuple<String, String>("LNK", "Link Platform") },
 			{ 1881867821, new Tuple<String, String>("LOG", "Woodcoin") },
