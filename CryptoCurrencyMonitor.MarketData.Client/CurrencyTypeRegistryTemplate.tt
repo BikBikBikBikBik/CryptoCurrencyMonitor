@@ -28,7 +28,7 @@ along with CryptoCurrencyMonitor.  If not, see <http://www.gnu.org/licenses/>.
 <#@ output extension=".txt" #>
 <#
 	var webClient = new WebClient();
-	var tickerString = webClient.DownloadString("https://api.coinmarketcap.com/v1/ticker/");
+	var tickerString = webClient.DownloadString("https://api.coinmarketcap.com/v1/ticker/?limit=0");
 	var ticker = JArray.Parse(tickerString);
 #>
 using System;
