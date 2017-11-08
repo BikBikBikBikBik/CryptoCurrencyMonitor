@@ -30,7 +30,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
 		}
 
 		public async Task<ICollection<CurrencyTicker>> GetTicker() {
-			var responseString = await GetHttpResponseStringAsync($"{_apiBaseAddress}ticker/");
+			var responseString = await GetHttpResponseStringAsync($"{_apiBaseAddress}ticker/?limit=0");
 			var currencyTicker = JsonConvert.DeserializeObject<List<CurrencyTickerDto>>(responseString);
 
 			return currencyTicker.Select(TinyMapper.Map<CurrencyTicker>).ToList();
