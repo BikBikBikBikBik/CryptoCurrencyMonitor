@@ -308,6 +308,10 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			Application.Exit();
 		}
 
+		private void OnMenuItemFileSaveClick(object sender, EventArgs e) {
+			SaveCompleteSettings();
+		}
+
 		private void OnMenuItemFileSettingsClick(object sender, EventArgs e) {
 			using (var settingsForm = new SettingsForm(_completeSettings)) {
 				if (settingsForm.ShowDialog(this) == DialogResult.OK) {

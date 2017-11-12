@@ -55,6 +55,7 @@
 			this._cntnrGridData = new System.Windows.Forms.SplitContainer();
 			this._menuMain = new System.Windows.Forms.MenuStrip();
 			this._menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+			this._menuItemFileSave = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuItemFileSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuSepFileSettings = new System.Windows.Forms.ToolStripSeparator();
 			this._menuItemFileQuit = new System.Windows.Forms.ToolStripMenuItem();
@@ -343,6 +344,7 @@
 			// _menuItemFile
 			// 
 			this._menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuItemFileSave,
             this._menuItemFileSettings,
             this._menuSepFileSettings,
             this._menuItemFileQuit});
@@ -350,11 +352,18 @@
 			this._menuItemFile.Size = new System.Drawing.Size(35, 20);
 			this._menuItemFile.Text = "&File";
 			// 
+			// _menuItemFileSave
+			// 
+			this._menuItemFileSave.Name = "_menuItemFileSave";
+			this._menuItemFileSave.Size = new System.Drawing.Size(152, 22);
+			this._menuItemFileSave.Text = "&Save";
+			this._menuItemFileSave.Click += new System.EventHandler(this.OnMenuItemFileSaveClick);
+			// 
 			// _menuItemFileSettings
 			// 
 			this._menuItemFileSettings.Name = "_menuItemFileSettings";
 			this._menuItemFileSettings.Size = new System.Drawing.Size(152, 22);
-			this._menuItemFileSettings.Text = "&Settings";
+			this._menuItemFileSettings.Text = "Se&ttings";
 			this._menuItemFileSettings.Click += new System.EventHandler(this.OnMenuItemFileSettingsClick);
 			// 
 			// _menuSepFileSettings
@@ -464,6 +473,7 @@
 		private System.Windows.Forms.ToolStripMenuItem _menuItemCurrencyListMarket;
 		private System.Windows.Forms.ToolStripMenuItem _menuItemFileSettings;
 		private System.Windows.Forms.ToolStripSeparator _menuSepFileSettings;
+		private System.Windows.Forms.ToolStripMenuItem _menuItemFileSave;
 	}
 }
 
