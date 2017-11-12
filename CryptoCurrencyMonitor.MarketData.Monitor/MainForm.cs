@@ -298,7 +298,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
 					_completeSettings.Monitoring.MarketCurrencyTypes = currencySelectionForm.SelectedCurrencyIds;
 
-					ApplyMonitoringSettings(_completeSettings.Monitoring);
+					ApplyMonitoringMarketSettings(_completeSettings.Monitoring);
 					await RefreshAllData();
 				}
 			}
