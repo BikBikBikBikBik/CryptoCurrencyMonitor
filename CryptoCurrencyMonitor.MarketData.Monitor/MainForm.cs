@@ -371,11 +371,11 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					overallPriceInUsd += totalPriceInUsd;
 
 					row.Cells[_clmnHoldingsPriceInUsd.Index].Value = $"{totalPriceInUsd:N}";
-					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:0.#########}";
+					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:0.########}";
 				}
 			}
 
-			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:0.#########}";
+			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:0.########}";
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
 		}
 
@@ -385,7 +385,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			foreach (var row in _marketDataGridViewRows) {
 				var desiredCurrency = tickerData.SingleOrDefault(c => c.Id == (int)row.Tag);
 				if (desiredCurrency != null) {
-					row.SetValues(row.Cells[0].Value, $"{desiredCurrency.PriceInUsd:0.00####}", $"{desiredCurrency.PriceInBtc:0.#########}", $"{desiredCurrency.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(desiredCurrency.PercentChange1H)}", $"{FormatPercentChange(desiredCurrency.PercentChange24H)}", $"{FormatPercentChange(desiredCurrency.PercentChange7D)}", $"{desiredCurrency.VolumeInUsd24H:N}", $"{desiredCurrency.MarketCapInUsd:N}", desiredCurrency.Rank);
+					row.SetValues(row.Cells[0].Value, $"{desiredCurrency.PriceInUsd:0.00####}", $"{desiredCurrency.PriceInBtc:0.########}", $"{desiredCurrency.PriceInBtc / 0.00000001m:N0}", $"{FormatPercentChange(desiredCurrency.PercentChange1H)}", $"{FormatPercentChange(desiredCurrency.PercentChange24H)}", $"{FormatPercentChange(desiredCurrency.PercentChange7D)}", $"{desiredCurrency.VolumeInUsd24H:N}", $"{desiredCurrency.MarketCapInUsd:N}", desiredCurrency.Rank);
 				}
 			}
 
