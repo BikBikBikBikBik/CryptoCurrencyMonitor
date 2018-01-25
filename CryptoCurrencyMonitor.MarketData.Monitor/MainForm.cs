@@ -348,7 +348,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_btnPauseRefreshTimer.Enabled = false;
 			_globalRefreshTimer.Stop();
 			_lblLastUpdatedValue.Text = $"{_lblLastUpdatedValue.Text} [IN PROGRESS]";
-			_ntfyMain.Text = "Updating...";
 
 			try {
 				_tickerData = await RefreshMarketData();
@@ -358,7 +357,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 
 			_lblLastUpdatedValue.Text = DateTime.Now.ToLongTimeString();
-			_ntfyMain.Text = $"{_lblLastUpdated.Text} {_lblLastUpdatedValue.Text}";
 			_globalRefreshTimer.Start();
 			_btnPauseRefreshTimer.Text = "Pause";
 			_btnPauseRefreshTimer.Enabled = true;
@@ -386,6 +384,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:0.########}";
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
+			_ntfyMain.Text = $"${_lblTotalValUsdValue.Text} / {_lblTotalValBtcValue.Text} BTC";
 		}
 
 		private async Task<ICollection<CurrencyTicker>> RefreshMarketData() {
