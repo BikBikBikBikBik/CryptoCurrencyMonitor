@@ -24,9 +24,9 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this._lblLastUpdated = new System.Windows.Forms.Label();
 			this._lblLastUpdatedValue = new System.Windows.Forms.Label();
 			this._prgrssGlobalRefresh = new System.Windows.Forms.ProgressBar();
@@ -62,6 +62,8 @@
 			this._menuItemCurrencyList = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuItemCurrencyListHoldings = new System.Windows.Forms.ToolStripMenuItem();
 			this._menuItemCurrencyListMarket = new System.Windows.Forms.ToolStripMenuItem();
+			this._ctxtMenuHoldings = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this._ctxtMenuHoldingsSumSelected = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this._gridMarketData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._gridHoldingsData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._cntnrGridData)).BeginInit();
@@ -69,6 +71,7 @@
 			this._cntnrGridData.Panel2.SuspendLayout();
 			this._cntnrGridData.SuspendLayout();
 			this._menuMain.SuspendLayout();
+			this._ctxtMenuHoldings.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// _lblLastUpdated
@@ -105,8 +108,8 @@
 			this._gridMarketData.AllowUserToAddRows = false;
 			this._gridMarketData.AllowUserToDeleteRows = false;
 			this._gridMarketData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this._gridMarketData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this._gridMarketData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this._gridMarketData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -219,8 +222,8 @@
 			this._gridHoldingsData.AllowUserToAddRows = false;
 			this._gridHoldingsData.AllowUserToDeleteRows = false;
 			this._gridHoldingsData.AllowUserToResizeRows = false;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this._gridHoldingsData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this._gridHoldingsData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this._gridHoldingsData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -232,6 +235,7 @@
             this._clmnHoldingsQuantity,
             this._clmnHoldingsPriceInUsd,
             this._clmnHoldingsPriceInBtc});
+			this._gridHoldingsData.ContextMenuStrip = this._ctxtMenuHoldings;
 			this._gridHoldingsData.Location = new System.Drawing.Point(3, 3);
 			this._gridHoldingsData.Name = "_gridHoldingsData";
 			this._gridHoldingsData.RowHeadersVisible = false;
@@ -401,6 +405,20 @@
 			this._menuItemCurrencyListMarket.Text = "&Market";
 			this._menuItemCurrencyListMarket.Click += new System.EventHandler(this.OnMenuItemCurrencyListMarketClick);
 			// 
+			// _ctxtMenuHoldings
+			// 
+			this._ctxtMenuHoldings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._ctxtMenuHoldingsSumSelected});
+			this._ctxtMenuHoldings.Name = "_ctxtMenuHoldings";
+			this._ctxtMenuHoldings.Size = new System.Drawing.Size(138, 26);
+			// 
+			// _ctxtMenuHoldingsSumSelected
+			// 
+			this._ctxtMenuHoldingsSumSelected.Name = "_ctxtMenuHoldingsSumSelected";
+			this._ctxtMenuHoldingsSumSelected.Size = new System.Drawing.Size(137, 22);
+			this._ctxtMenuHoldingsSumSelected.Text = "Sum selected";
+			this._ctxtMenuHoldingsSumSelected.Click += new System.EventHandler(this.OnContextMenuHoldingsSumSelectedClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +451,7 @@
 			this._cntnrGridData.ResumeLayout(false);
 			this._menuMain.ResumeLayout(false);
 			this._menuMain.PerformLayout();
+			this._ctxtMenuHoldings.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -474,6 +493,8 @@
 		private System.Windows.Forms.ToolStripMenuItem _menuItemFileSettings;
 		private System.Windows.Forms.ToolStripSeparator _menuSepFileSettings;
 		private System.Windows.Forms.ToolStripMenuItem _menuItemFileSave;
+		private System.Windows.Forms.ContextMenuStrip _ctxtMenuHoldings;
+		private System.Windows.Forms.ToolStripMenuItem _ctxtMenuHoldingsSumSelected;
 	}
 }
 

@@ -167,6 +167,15 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 
+		private void OnContextMenuHoldingsSumSelectedClick(object sender, EventArgs e) {
+			var selectedRows = _gridHoldingsData.SelectedRows.Cast<DataGridViewRow>().ToList();
+
+			var totalPriceInBtc = selectedRows.Sum(d => decimal.Parse(d.Cells[_clmnHoldingsPriceInBtc.Index].Value.ToString()));
+			var totalPriceInUsd = selectedRows.Sum(d => decimal.Parse(d.Cells[_clmnHoldingsPriceInUsd.Index].Value.ToString()));
+
+			MessageBox.Show(this, $"BTC: {totalPriceInBtc:0.########}{Environment.NewLine}USD: {totalPriceInUsd:N}", "Sum", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
 		private void OnFormMainClosed(object sender, FormClosedEventArgs e) {
 			SaveCompleteSettings();
 		}
