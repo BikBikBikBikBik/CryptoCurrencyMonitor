@@ -203,55 +203,6 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_prgrssGlobalRefresh.Value += 1;
 		}
 
-		private void OnGridMarketDataCellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
-			switch ((MarketDataColumnType)_gridMarketData.Columns[e.ColumnIndex].Tag) {
-				case MarketDataColumnType.PercentChange1H:
-				case MarketDataColumnType.PercentChange24H:
-				case MarketDataColumnType.PercentChange7D:
-					var initialChar = e.Value?.ToString()[0];
-
-					switch (initialChar) {
-						case '+':
-							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
-						break;
-
-						case '-':
-							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
-						break;
-
-						default:
-							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = _gridMarketData.Columns[e.ColumnIndex].DefaultCellStyle;
-						break;
-					}
-				break;
-			}
-		}
-
-		private void OnGridMarketDataSortCompare(object sender, DataGridViewSortCompareEventArgs e) {
-			switch ((MarketDataColumnType)e.Column.Tag) {
-				case MarketDataColumnType.Coin:
-					e.SortResult = String.Compare(e.CellValue1.ToString(), e.CellValue2.ToString());
-				break;
-				
-				case MarketDataColumnType.PercentChange1H:
-				case MarketDataColumnType.PercentChange24H:
-				case MarketDataColumnType.PercentChange7D:
-					e.SortResult = decimal.Parse(e.CellValue1.ToString().Replace(" ", String.Empty)).CompareTo(decimal.Parse(e.CellValue2.ToString().Replace(" ", String.Empty)));
-				break;
-
-				case MarketDataColumnType.MarketCapInUsd:
-				case MarketDataColumnType.PriceInBtc:
-				case MarketDataColumnType.PriceInUsd:
-				case MarketDataColumnType.Rank:
-				case MarketDataColumnType.Satoshi:
-				case MarketDataColumnType.VolumeInUsd24H:
-					e.SortResult = decimal.Parse(e.CellValue1.ToString().Replace(",", String.Empty)).CompareTo(decimal.Parse(e.CellValue2.ToString().Replace(",", String.Empty)));
-				break;
-			}
-
-			e.Handled = true;
-		}
-
 		private void OnGridHoldingsDataCellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
 			var columnTag = _gridHoldingsData.Columns[e.ColumnIndex].Tag;
 			switch ((HoldingsDataColumnType)columnTag) {
@@ -288,6 +239,30 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			e.Handled = true;
 		}
 
+		private void OnGridMarketDataCellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
+			switch ((MarketDataColumnType)_gridMarketData.Columns[e.ColumnIndex].Tag) {
+				case MarketDataColumnType.PercentChange1H:
+				case MarketDataColumnType.PercentChange24H:
+				case MarketDataColumnType.PercentChange7D:
+					var initialChar = e.Value?.ToString()[0];
+
+					switch (initialChar) {
+						case '+':
+							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
+						break;
+
+						case '-':
+							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
+						break;
+
+						default:
+							_gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = _gridMarketData.Columns[e.ColumnIndex].DefaultCellStyle;
+						break;
+					}
+				break;
+			}
+		}
+
 		private void OnGridMarketDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
 			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.ColumnIndex == _clmnMarketVolumeUsd24h.Index && e.RowIndex >= 0) {
 				var cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
@@ -301,6 +276,31 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 				e.Handled = true;
 			}
+		}
+
+		private void OnGridMarketDataSortCompare(object sender, DataGridViewSortCompareEventArgs e) {
+			switch ((MarketDataColumnType)e.Column.Tag) {
+				case MarketDataColumnType.Coin:
+					e.SortResult = String.Compare(e.CellValue1.ToString(), e.CellValue2.ToString());
+				break;
+				
+				case MarketDataColumnType.PercentChange1H:
+				case MarketDataColumnType.PercentChange24H:
+				case MarketDataColumnType.PercentChange7D:
+					e.SortResult = decimal.Parse(e.CellValue1.ToString().Replace(" ", String.Empty)).CompareTo(decimal.Parse(e.CellValue2.ToString().Replace(" ", String.Empty)));
+				break;
+
+				case MarketDataColumnType.MarketCapInUsd:
+				case MarketDataColumnType.PriceInBtc:
+				case MarketDataColumnType.PriceInUsd:
+				case MarketDataColumnType.Rank:
+				case MarketDataColumnType.Satoshi:
+				case MarketDataColumnType.VolumeInUsd24H:
+					e.SortResult = decimal.Parse(e.CellValue1.ToString().Replace(",", String.Empty)).CompareTo(decimal.Parse(e.CellValue2.ToString().Replace(",", String.Empty)));
+				break;
+			}
+
+			e.Handled = true;
 		}
 
 		private void OnMenuItemCurrencyListHoldingsClick(object sender, EventArgs e) {
@@ -405,7 +405,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private async Task<ICollection<CurrencyTicker>> RefreshMarketData() {
-			var tickerData = await _coinMarketCapClient.GetTicker();
+			var tickerData = await _coinMarketCapClient.GetTickerAsync();
 
 			foreach (var row in _marketDataGridViewRows) {
 				var desiredCurrency = tickerData.SingleOrDefault(c => c.Id == (int)row.Tag);

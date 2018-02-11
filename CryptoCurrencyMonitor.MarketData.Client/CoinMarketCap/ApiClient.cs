@@ -36,7 +36,7 @@ namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
 			return TinyMapper.Map<GlobalData>(globalData);
 		}
 
-		public async Task<ICollection<CurrencyTicker>> GetTicker() {
+		public async Task<ICollection<CurrencyTicker>> GetTickerAsync() {
 			var responseString = await GetHttpResponseStringAsync($"{_apiBaseAddress}ticker/?limit=0");
 			var currencyTicker = JsonConvert.DeserializeObject<List<CurrencyTickerDto>>(responseString);
 
