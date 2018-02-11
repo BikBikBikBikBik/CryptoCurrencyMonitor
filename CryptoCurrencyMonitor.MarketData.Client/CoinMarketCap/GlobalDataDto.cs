@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (C) 2017-2018 BikBikBikBikBik
+Copyright (C) 2018 BikBikBikBikBik
 
 This file is part of CryptoCurrencyMonitor.
 
@@ -16,13 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with CryptoCurrencyMonitor.  If not, see <http://www.gnu.org/licenses/>.
 */
-using Nelibur.ObjectMapper;
+using System.ComponentModel;
 
-namespace CryptoCurrencyMonitor.MarketData.Client.TypeConversion {
-	internal static class TypeRegistry {
-		static TypeRegistry() {
-			TinyMapper.Bind<CoinMarketCap.CurrencyTickerDto, CoinMarketCap.CurrencyTicker>();
-			TinyMapper.Bind<CoinMarketCap.GlobalDataDto, CoinMarketCap.GlobalData>();
-		}
+namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
+	[TypeConverter(typeof(GlobalDataConverter))]
+	internal class GlobalDataDto {
+		public int Active_assets { get; set; }
+
+		public int Active_currencies { get; set; }
+
+		public int Active_markets { get; set; }
+
+		public double Bitcoin_percentage_of_market_cap { get; set; }
+
+		public long Last_updated { get; set; }
+
+		public float Total_24h_volume_usd { get; set; }
+
+		public float Total_market_cap_usd { get; set; }
 	}
 }

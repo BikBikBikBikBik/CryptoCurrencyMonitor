@@ -52,6 +52,9 @@
     <Compile Include="CoinMarketCap\CurrencyTicker.cs" />
     <Compile Include="CoinMarketCap\CurrencyTickerConverter.cs" />
     <Compile Include="CoinMarketCap\CurrencyTickerDto.cs" />
+    <Compile Include="CoinMarketCap\GlobalData.cs" />
+    <Compile Include="CoinMarketCap\GlobalDataConverter.cs" />
+    <Compile Include="CoinMarketCap\GlobalDataDto.cs" />
     <Compile Include="CryptoCompare\ApiClient.cs" />
     <Compile Include="CurrencyTypeRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
