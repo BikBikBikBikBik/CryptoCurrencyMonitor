@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (C) 2017 BikBikBikBikBik
+Copyright (C) 2017-2018 BikBikBikBikBik
 
 This file is part of CryptoCurrencyMonitor.
 
@@ -27,6 +27,13 @@ using Newtonsoft.Json;
 namespace CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap {
 	public class ApiClient : ClientBase {
 		public ApiClient(String apiBaseAddress) : base(apiBaseAddress) {
+		}
+
+		public async Task<GlobalData> GetGlobalDataAsync() {
+			var responseString = await GetHttpResponseStringAsync($"{_apiBaseAddress}global/");
+			var globalData = JsonConvert.DeserializeObject<GlobalDataDto>(responseString);
+
+			return TinyMapper.Map<GlobalData>(globalData);
 		}
 
 		public async Task<ICollection<CurrencyTicker>> GetTicker() {
