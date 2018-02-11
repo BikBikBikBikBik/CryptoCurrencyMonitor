@@ -137,6 +137,7 @@
 			this._gridMarketData.Size = new System.Drawing.Size(1006, 255);
 			this._gridMarketData.TabIndex = 5;
 			this._gridMarketData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridMarketDataCellFormatting);
+			this._gridMarketData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.OnGridMarketDataCellPainting);
 			this._gridMarketData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridMarketDataSortCompare);
 			// 
 			// _clmnMarketCoin

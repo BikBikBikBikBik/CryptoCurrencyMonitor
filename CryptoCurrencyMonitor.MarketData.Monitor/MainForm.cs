@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (C) 2017 BikBikBikBikBik
+Copyright (C) 2017-2018 BikBikBikBikBik
 
 This file is part of CryptoCurrencyMonitor.
 
@@ -39,6 +39,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_settingsManager = new SettingsManager(ConfigurationManager.AppSettings["SETTINGS_FILE_LOCATION"]);
 			_completeSettings = _settingsManager.LoadCompleteSettings();
 
+			_globalMarketData = new GlobalData();
 			_lblLastUpdatedValue.Text = String.Empty;
 			_lblTotalValBtcValue.Text = "0";
 			_lblTotalValUsdValue.Text = "0.00";
@@ -287,6 +288,21 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			e.Handled = true;
 		}
 
+		private void OnGridMarketDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
+			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.ColumnIndex == _clmnMarketVolumeUsd24h.Index && e.RowIndex >= 0) {
+				var cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+				var volumePercent = double.Parse(cellText) / _globalMarketData.TotalVolumeInUsd24H;
+				var fillWidth = (int)Math.Floor(e.CellBounds.Width * volumePercent);
+
+				e.Graphics.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, fillWidth, e.CellBounds.Height));
+				e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), new Rectangle(e.CellBounds.Left + fillWidth, e.CellBounds.Top, e.CellBounds.Width - fillWidth, e.CellBounds.Height));
+				e.Graphics.DrawString(cellText, this.Font, new SolidBrush(Color.White), new Point(e.CellBounds.Left, e.CellBounds.Top + 2));
+				e.Graphics.DrawRectangle(new Pen(Color.Silver), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+
+				e.Handled = true;
+			}
+		}
+
 		private void OnMenuItemCurrencyListHoldingsClick(object sender, EventArgs e) {
 			using (var currencySelectionForm = new CurrencySelectionForm(_completeSettings.Monitoring.Holdings.Select(h => h.RowTag).ToList())) {
 				if (currencySelectionForm.ShowDialog(this) == DialogResult.OK) {
@@ -350,6 +366,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblLastUpdatedValue.Text = $"{_lblLastUpdatedValue.Text} [IN PROGRESS]";
 
 			try {
+				_globalMarketData = await _coinMarketCapClient.GetGlobalDataAsync();
 				_tickerData = await RefreshMarketData();
 				RefreshHoldingsData(_tickerData);
 			} catch (Exception e) {
@@ -486,6 +503,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private const int DEFAULT_REFRESH_INTERVAL = 120;
 		private readonly ApiClient _coinMarketCapClient;
 		private readonly CompleteSettings _completeSettings;
+		private GlobalData _globalMarketData;
 		private Timer _globalRefreshTimer;
 		private IEnumerable<DataGridViewColumn> _holdingsDataGridViewColumns;
 		private IEnumerable<DataGridViewRow> _holdingsDataGridViewRows;
