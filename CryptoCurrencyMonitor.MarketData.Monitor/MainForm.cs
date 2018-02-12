@@ -415,7 +415,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private void PaintPartialCellBackground(DataGridViewCellPaintingEventArgs e, Color backgroundColor, Color partialFillColor, Color textColor, int partialFillWidth, String cellText) {
 			e.Graphics.FillRectangle(new SolidBrush(partialFillColor), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, partialFillWidth, e.CellBounds.Height));
 			e.Graphics.FillRectangle(new SolidBrush(backgroundColor), new Rectangle(e.CellBounds.Left + partialFillWidth, e.CellBounds.Top, e.CellBounds.Width - partialFillWidth, e.CellBounds.Height));
-			e.Graphics.DrawString(cellText, Font, new SolidBrush(textColor), new Point(e.CellBounds.Left, e.CellBounds.Top + 2));
+			e.Graphics.DrawString(cellText, Font, new SolidBrush(textColor), new Point(e.CellBounds.Left, e.CellBounds.Top + 4));
 			e.Graphics.DrawRectangle(new Pen(Color.Black), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
 		}
 
