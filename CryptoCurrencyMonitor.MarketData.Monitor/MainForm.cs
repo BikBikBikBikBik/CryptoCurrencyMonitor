@@ -264,17 +264,23 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		}
 
 		private void OnGridMarketDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
-			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.ColumnIndex == _clmnMarketVolumeUsd24h.Index && e.RowIndex >= 0) {
-				var cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-				var volumePercent = double.Parse(cellText) / _globalMarketData.TotalVolumeInUsd24H;
-				var fillWidth = (int)Math.Floor(e.CellBounds.Width * volumePercent);
+			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.RowIndex >= 0) {
+				var cellText = String.Empty;
+				var fillWidth = -1;
 
-				e.Graphics.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, fillWidth, e.CellBounds.Height));
-				e.Graphics.FillRectangle(new SolidBrush(Color.DarkGray), new Rectangle(e.CellBounds.Left + fillWidth, e.CellBounds.Top, e.CellBounds.Width - fillWidth, e.CellBounds.Height));
-				e.Graphics.DrawString(cellText, this.Font, new SolidBrush(Color.White), new Point(e.CellBounds.Left, e.CellBounds.Top + 2));
-				e.Graphics.DrawRectangle(new Pen(Color.Silver), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+				switch ((MarketDataColumnType)_gridMarketData.Columns[e.ColumnIndex].Tag) {
+					case MarketDataColumnType.VolumeInUsd24H:
+						cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+						var volumePercent = double.Parse(cellText) / _globalMarketData.TotalVolumeInUsd24H;
+						fillWidth = (int)Math.Floor(e.CellBounds.Width * volumePercent);
+					break;
+				}
 
-				e.Handled = true;
+				if (fillWidth >= 0) {
+					PaintPartialCellBackground(e, Color.DarkGray, Color.Gray, Color.White, fillWidth, cellText);
+
+					e.Handled = true;
+				}
 			}
 		}
 
@@ -359,6 +365,13 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 		}
 		#endregion
+
+		private void PaintPartialCellBackground(DataGridViewCellPaintingEventArgs e, Color backgroundColor, Color partialFillColor, Color textColor, int partialFillWidth, String cellText) {
+			e.Graphics.FillRectangle(new SolidBrush(partialFillColor), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, partialFillWidth, e.CellBounds.Height));
+			e.Graphics.FillRectangle(new SolidBrush(backgroundColor), new Rectangle(e.CellBounds.Left + partialFillWidth, e.CellBounds.Top, e.CellBounds.Width - partialFillWidth, e.CellBounds.Height));
+			e.Graphics.DrawString(cellText, Font, new SolidBrush(textColor), new Point(e.CellBounds.Left, e.CellBounds.Top + 2));
+			e.Graphics.DrawRectangle(new Pen(Color.Silver), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+		}
 
 		private async Task RefreshAllData() {
 			_btnPauseRefreshTimer.Enabled = false;
