@@ -58,6 +58,7 @@
     <Compile Include="CurrencySelectionForm.Designer.cs">
       <DependentUpon>CurrencySelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ColorExtensionMethods.cs" />
     <Compile Include="MarketDataColumnType.cs" />
     <Compile Include="HoldingsDataColumnType.cs" />
     <Compile Include="MainForm.cs">

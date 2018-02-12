@@ -26,6 +26,7 @@ using System.Timers;
 using System.Windows.Forms;
 using CryptoCurrencyMonitor.MarketData.Client;
 using CryptoCurrencyMonitor.MarketData.Client.CoinMarketCap;
+using CryptoCurrencyMonitor.MarketData.Monitor.Extensions;
 using CryptoCurrencyMonitor.MarketData.Monitor.Settings;
 using LayoutSettings = CryptoCurrencyMonitor.MarketData.Monitor.Settings.LayoutSettings;
 using Timer = System.Timers.Timer;
@@ -265,19 +266,29 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void OnGridMarketDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
 			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.RowIndex >= 0) {
+				var backgroundColor = Color.White;
 				var cellText = String.Empty;
 				var fillWidth = -1;
+				var partialFillColor = Color.Gray;
+				var textColor = Color.Black;
 
 				switch ((MarketDataColumnType)_gridMarketData.Columns[e.ColumnIndex].Tag) {
 					case MarketDataColumnType.VolumeInUsd24H:
+						backgroundColor = Color.DarkGray;
 						cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 						var volumePercent = double.Parse(cellText) / _globalMarketData.TotalVolumeInUsd24H;
 						fillWidth = (int)Math.Floor(e.CellBounds.Width * volumePercent);
+						partialFillColor = Color.Gray;
+						textColor = Color.White;
 					break;
 				}
 
 				if (fillWidth >= 0) {
-					PaintPartialCellBackground(e, Color.DarkGray, Color.Gray, Color.White, fillWidth, cellText);
+					if (e.RowIndex % 2 == 0) {
+						PaintPartialCellBackground(e, backgroundColor, partialFillColor, textColor, fillWidth, cellText);
+					} else {
+						PaintPartialCellBackground(e, backgroundColor.Darken(0.6), partialFillColor.Darken(0.4), textColor, fillWidth, cellText);
+					}
 
 					e.Handled = true;
 				}
@@ -370,7 +381,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			e.Graphics.FillRectangle(new SolidBrush(partialFillColor), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, partialFillWidth, e.CellBounds.Height));
 			e.Graphics.FillRectangle(new SolidBrush(backgroundColor), new Rectangle(e.CellBounds.Left + partialFillWidth, e.CellBounds.Top, e.CellBounds.Width - partialFillWidth, e.CellBounds.Height));
 			e.Graphics.DrawString(cellText, Font, new SolidBrush(textColor), new Point(e.CellBounds.Left, e.CellBounds.Top + 2));
-			e.Graphics.DrawRectangle(new Pen(Color.Silver), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+			e.Graphics.DrawRectangle(new Pen(Color.Black), new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
 		}
 
 		private async Task RefreshAllData() {
