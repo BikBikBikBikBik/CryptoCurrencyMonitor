@@ -245,6 +245,7 @@
 			this._gridHoldingsData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this._gridHoldingsData.Size = new System.Drawing.Size(1006, 257);
 			this._gridHoldingsData.TabIndex = 7;
+			this._gridHoldingsData.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.OnGridHoldingsDataCellPainting);
 			this._gridHoldingsData.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.OnGridHoldingsDataCellValidating);
 			this._gridHoldingsData.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.OnGridHoldingsDataSortCompare);
 			// 

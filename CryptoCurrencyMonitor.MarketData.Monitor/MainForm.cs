@@ -46,6 +46,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValUsdValue.Text = "0.00";
 			_ntfyMain.ContextMenu = new ContextMenu(new []{ new MenuItem("E&xit", (s, a) => Application.Exit()) });
 			_ntfyMain.Text = String.Empty;
+			_overallHoldingsPriceInBtc = 0;
+			_overallHoldingsPriceInUsd = 0;
 			_tickerData = new List<CurrencyTicker>();
 			
 			SetMarketDataColumnTags();
@@ -202,6 +204,38 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			}
 
 			_prgrssGlobalRefresh.Value += 1;
+		}
+
+		private void OnGridHoldingsDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
+			if (_overallHoldingsPriceInBtc > 0 && e.RowIndex >= 0) {
+				var backgroundColor = Color.DarkGray;
+				var cellText = _gridHoldingsData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+				var fillWidth = -1;
+				var partialFillColor = Color.Gray;
+				var textColor = Color.White;
+
+				switch ((HoldingsDataColumnType)_gridHoldingsData.Columns[e.ColumnIndex].Tag) {
+					case HoldingsDataColumnType.PriceInBtc:
+						var btcPercent = decimal.Parse(cellText) / _overallHoldingsPriceInBtc;
+						fillWidth = (int)Math.Floor(e.CellBounds.Width * btcPercent);
+					break;
+
+					case HoldingsDataColumnType.PriceInUsd:
+						var usdPercent = decimal.Parse(cellText) / _overallHoldingsPriceInUsd;
+						fillWidth = (int)Math.Floor(e.CellBounds.Width * usdPercent);
+					break;
+				}
+
+				if (fillWidth >= 0) {
+					if (e.RowIndex % 2 == 0) {
+						PaintPartialCellBackground(e, backgroundColor, partialFillColor, textColor, fillWidth, cellText);
+					} else {
+						PaintPartialCellBackground(e, backgroundColor.Darken(0.6), partialFillColor.Darken(0.4), textColor, fillWidth, cellText);
+					}
+
+					e.Handled = true;
+				}
+			}
 		}
 
 		private void OnGridHoldingsDataCellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
@@ -427,6 +461,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_lblTotalValBtcValue.Text = $"{overallPriceInBtc:0.########}";
 			_lblTotalValUsdValue.Text = $"{overallPriceInUsd:N}";
 			_ntfyMain.Text = $"${_lblTotalValUsdValue.Text} / {_lblTotalValBtcValue.Text} BTC";
+			_overallHoldingsPriceInBtc = overallPriceInBtc;
+			_overallHoldingsPriceInUsd = overallPriceInUsd;
 		}
 
 		private async Task<ICollection<CurrencyTicker>> RefreshMarketData() {
@@ -534,6 +570,8 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 		private IEnumerable<DataGridViewRow> _holdingsDataGridViewRows;
 		private IEnumerable<DataGridViewColumn> _marketDataGridViewColumns;
 		private IEnumerable<DataGridViewRow> _marketDataGridViewRows;
+		private decimal _overallHoldingsPriceInBtc;
+		private decimal _overallHoldingsPriceInUsd;
 		private readonly SettingsManager _settingsManager;
 		private ICollection<CurrencyTicker> _tickerData;
 	}
