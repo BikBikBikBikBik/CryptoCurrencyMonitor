@@ -453,8 +453,7 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 					overallPriceInBtc += totalPriceInBtc;
 					overallPriceInUsd += totalPriceInUsd;
 
-					row.Cells[_clmnHoldingsPriceInUsd.Index].Value = $"{totalPriceInUsd:N}";
-					row.Cells[_clmnHoldingsPriceInBtc.Index].Value = $"{totalPriceInBtc:0.########}";
+					row.SetValues(row.Cells[0].Value, row.Cells[1].Value, $"{totalPriceInUsd:N}", $"{totalPriceInBtc:0.########}");
 				}
 			}
 
@@ -463,6 +462,15 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 			_ntfyMain.Text = $"${_lblTotalValUsdValue.Text} / {_lblTotalValBtcValue.Text} BTC";
 			_overallHoldingsPriceInBtc = overallPriceInBtc;
 			_overallHoldingsPriceInUsd = overallPriceInUsd;
+
+			RefreshHoldingsPartialCellBackgrounds();
+		}
+
+		private void RefreshHoldingsPartialCellBackgrounds() {
+			for (var i = 0; i < _gridHoldingsData.Rows.Count; i++) {
+				_gridHoldingsData.UpdateCellValue(_clmnHoldingsPriceInBtc.Index, i);
+				_gridHoldingsData.UpdateCellValue(_clmnHoldingsPriceInUsd.Index, i);
+			}
 		}
 
 		private async Task<ICollection<CurrencyTicker>> RefreshMarketData() {
