@@ -266,20 +266,21 @@ namespace CryptoCurrencyMonitor.MarketData.Monitor {
 
 		private void OnGridMarketDataCellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
 			if (_globalMarketData.TotalVolumeInUsd24H > 0 && e.RowIndex >= 0) {
-				var backgroundColor = Color.White;
-				var cellText = String.Empty;
+				var backgroundColor = Color.DarkGray;
+				var cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 				var fillWidth = -1;
 				var partialFillColor = Color.Gray;
-				var textColor = Color.Black;
+				var textColor = Color.White;
 
 				switch ((MarketDataColumnType)_gridMarketData.Columns[e.ColumnIndex].Tag) {
+					case MarketDataColumnType.MarketCapInUsd:
+						var marketCapPercent = double.Parse(cellText) / _globalMarketData.TotalMarketCapInUsd;
+						fillWidth = (int)Math.Floor(e.CellBounds.Width * marketCapPercent);
+					break;
+
 					case MarketDataColumnType.VolumeInUsd24H:
-						backgroundColor = Color.DarkGray;
-						cellText = _gridMarketData.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 						var volumePercent = double.Parse(cellText) / _globalMarketData.TotalVolumeInUsd24H;
 						fillWidth = (int)Math.Floor(e.CellBounds.Width * volumePercent);
-						partialFillColor = Color.Gray;
-						textColor = Color.White;
 					break;
 				}
 
